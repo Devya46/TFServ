@@ -1,0 +1,1147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thakkar Finance Services</title>
+    <link
+      rel="shortcut icon"
+      href="https://financewithajay.co/wp-content/uploads/2026/07/Favicon-3-Photoroom.png"
+      type="image/png"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome 6 (more reliable CDN) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      /* ----- ROOT (global variables, no override) ----- */
+      :root {
+        --primary: #58d916;
+        --primary-light: #7cff00;
+        --secondary: #2178ca;
+        --secondary-light: #49a6ff;
+
+        --background: #050b18;
+        --background-secondary: #0b1630;
+        --background-tertiary: #071d32;
+
+        --foreground: #ffffff;
+        --muted: #a9b7cc;
+        --dark: #172033;
+        --border: #203a5c;
+
+        --card: #0b1630;
+
+        --gradient-primary: linear-gradient(135deg, #58d916, #7cff00);
+        --gradient-secondary: linear-gradient(135deg, #2178ca, #49a6ff);
+        --gradient-brand: linear-gradient(135deg, #58d916, #2178ca, #49a6ff);
+      }
+
+      /* ----- GLOBAL RESET (scoped inside .tfs-root) ----- */
+      .tfs-root * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family:
+          "Poppins",
+          "Segoe UI",
+          system-ui,
+          -apple-system,
+          sans-serif;
+      }
+
+      .tfs-root {
+        font-family:
+          "Poppins",
+          "Segoe UI",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background: var(--background);
+        color: var(--foreground);
+        line-height: 1.5;
+      }
+
+      /* ============================================
+         TRANSPARENT HEADER – "tfs-" prefix all classes
+         ============================================ */
+      .tfs-navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 48px;
+
+        /* fully transparent default */
+        background: transparent;
+        border-bottom: 1px solid transparent;
+
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1002;
+        box-sizing: border-box;
+
+        transition:
+          background 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          backdrop-filter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          -webkit-backdrop-filter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          border-radius 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          padding 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          margin 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          border-color 0.3s ease;
+      }
+
+      /* scrolled state – round glass effect */
+      .tfs-navbar.tfs-scrolled {
+        background: rgba(5, 11, 24, 0.78);
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.45);
+        border-radius: 28px;
+        width: calc(100% - 48px);
+        margin: 12px 24px;
+        padding: 12px 32px;
+        border-bottom: 1px solid rgba(32, 58, 92, 0.3);
+      }
+
+      .tfs-navbar.tfs-scrolled .tfs-logo img {
+        height: 44px;
+      }
+
+      .tfs-navbar.tfs-scrolled .tfs-nav-links a {
+        color: rgba(255, 255, 255, 0.85);
+      }
+
+      /* ----- LOGO ----- */
+      .tfs-logo img {
+        height: 90px;
+        width: auto;
+        display: block;
+        transition:
+          height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          transform 0.2s;
+        filter: brightness(1.2) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+      }
+      .tfs-logo img:hover {
+        transform: scale(1.02);
+      }
+
+      /* ----- DESKTOP NAV LINKS ----- */
+      .tfs-nav-links {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+      }
+
+      .tfs-nav-links a {
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: 500;
+        font-size: 15px;
+        letter-spacing: 0.3px;
+        transition:
+          color 0.2s,
+          border-bottom 0.2s;
+        padding-bottom: 4px;
+        border-bottom: 2px solid transparent;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        white-space: nowrap;
+      }
+      .tfs-nav-links a:hover {
+        color: #ffffff;
+        border-bottom-color: var(--primary);
+      }
+
+      /* ----- DESKTOP CTA BUTTON ----- */
+      .tfs-btn-nav {
+        background: var(--gradient-primary);
+        color: var(--background);
+        padding: 10px 28px;
+        border-radius: 60px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        box-shadow: 0 8px 24px rgba(88, 217, 22, 0.3);
+        transition:
+          box-shadow 0.25s,
+          transform 0.2s,
+          background 0.2s,
+          padding 0.4s;
+        border: none;
+        white-space: nowrap;
+        margin-left: 8px;
+        cursor: pointer;
+      }
+      .tfs-btn-nav i {
+        font-size: 16px;
+        color: var(--background);
+      }
+      .tfs-btn-nav:hover {
+        box-shadow: 0 12px 32px rgba(88, 217, 22, 0.5);
+        transform: translateY(-2px);
+        background: linear-gradient(135deg, #6ae91e, #8cff2a);
+        color: var(--background);
+      }
+      .tfs-btn-nav:active {
+        transform: scale(0.96);
+      }
+
+      /* ----- HAMBURGER (mobile) ----- */
+      .tfs-menu-toggle {
+        display: none;
+        font-size: 28px;
+        cursor: pointer;
+        color: #ffffff;
+        background: transparent;
+        border: none;
+        padding: 4px 6px;
+        transition: opacity 0.2s;
+        z-index: 1001;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      }
+      .tfs-menu-toggle:hover {
+        opacity: 0.7;
+      }
+
+      /* ----- CLOSE BUTTON (inside slide) ----- */
+      .tfs-close-btn {
+        display: none;
+        position: absolute;
+        top: 18px;
+        right: 22px;
+        font-size: 28px;
+        cursor: pointer;
+        color: var(--foreground);
+        background: transparent;
+        border: none;
+        padding: 4px 8px;
+        transition: transform 0.2s;
+      }
+      .tfs-close-btn:hover {
+        transform: rotate(90deg);
+        color: var(--primary);
+      }
+
+      /* ----- OVERLAY ----- */
+      .tfs-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(5, 11, 24, 0.7);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.3s,
+          visibility 0.3s;
+        z-index: 999;
+      }
+      .tfs-overlay.tfs-active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      /* ----- MOBILE CTA (inside slide) ----- */
+      .tfs-btn-mobile {
+        display: none;
+      }
+
+      /* ============================================
+         RESPONSIVE (< 900px)
+         ============================================ */
+      @media (max-width: 900px) {
+        .tfs-navbar {
+          padding: 14px 24px;
+        }
+        .tfs-menu-toggle {
+          display: block;
+        }
+
+        /* hide desktop CTA inside navbar on mobile */
+        .tfs-navbar .tfs-btn-nav {
+          display: none;
+        }
+
+        /* slide menu */
+        .tfs-nav-links {
+          position: fixed;
+          top: 0;
+          left: -100%;
+          width: 280px;
+          max-width: 80%;
+          height: 100%;
+          background: var(--background-secondary);
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 72px 28px 40px;
+          gap: 18px;
+          transition: left 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
+          z-index: 1000;
+          box-shadow: 6px 0 40px rgba(0, 0, 0, 0.6);
+          overflow-y: auto;
+          border-right: 1px solid var(--border);
+          display: flex;
+        }
+        .tfs-nav-links.tfs-active {
+          left: 0;
+        }
+
+        .tfs-close-btn {
+          display: block;
+        }
+
+        .tfs-nav-links a {
+          font-size: 16px;
+          padding: 8px 0;
+          width: 100%;
+          border-bottom: 1px solid rgba(32, 58, 92, 0.3);
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          color: var(--muted);
+          border-bottom-color: transparent;
+          text-shadow: none;
+        }
+        .tfs-nav-links a i {
+          width: 24px;
+          color: var(--primary);
+          font-size: 18px;
+        }
+        .tfs-nav-links a:hover {
+          color: var(--foreground);
+          border-bottom-color: var(--primary);
+          padding-left: 6px;
+        }
+
+        .tfs-nav-links .tfs-btn-mobile {
+          display: inline-flex;
+          margin-top: 20px;
+          background: var(--gradient-primary);
+          color: var(--background);
+          padding: 12px 28px;
+          border-radius: 60px;
+          text-decoration: none;
+          align-items: center;
+          gap: 12px;
+          font-size: 15px;
+          font-weight: 600;
+          box-shadow: 0 8px 20px rgba(88, 217, 22, 0.3);
+          transition: 0.2s;
+          border: none;
+          width: auto;
+          border-bottom: none !important;
+          letter-spacing: 0.3px;
+          cursor: pointer;
+        }
+        .tfs-nav-links .tfs-btn-mobile i {
+          color: var(--background);
+          font-size: 18px;
+        }
+        .tfs-nav-links .tfs-btn-mobile:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 12px 28px rgba(88, 217, 22, 0.45);
+          padding-left: 28px;
+          background: linear-gradient(135deg, #6ae91e, #8cff2a);
+        }
+
+        /* mobile scrolled state – full width, no round */
+        .tfs-navbar.tfs-scrolled {
+          border-radius: 0;
+          width: 100%;
+          margin: 0;
+          padding: 14px 24px;
+          background: rgba(5, 11, 24, 0.85);
+          backdrop-filter: blur(16px) saturate(180%);
+          -webkit-backdrop-filter: blur(16px) saturate(180%);
+          border-bottom: 1px solid rgba(32, 58, 92, 0.3);
+          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .tfs-navbar.tfs-scrolled .tfs-logo img {
+          height: 44px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .tfs-navbar {
+          padding: 12px 16px;
+        }
+        .tfs-nav-links {
+          width: 260px;
+          padding: 68px 20px 30px;
+        }
+        .tfs-navbar.tfs-scrolled {
+          padding: 12px 16px;
+        }
+      }
+
+      /* Fix icon display issues */
+      .tfs-nav-links a i,
+      .tfs-btn-nav i,
+      .tfs-btn-mobile i,
+      .tfs-close-btn i,
+      .tfs-menu-toggle i {
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .tfs-nav-links a i.fas,
+      .tfs-btn-nav i.fas,
+      .tfs-btn-mobile i.fas,
+      .tfs-close-btn i.fas,
+      .tfs-menu-toggle i.fas {
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+      }
+
+      .tfs-nav-links a i.fa-solid,
+      .tfs-btn-nav i.fa-solid,
+      .tfs-btn-mobile i.fa-solid {
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+      }
+
+      /* Ensure icons show in all browsers */
+      .tfs-nav-links a i::before,
+      .tfs-btn-nav i::before,
+      .tfs-btn-mobile i::before,
+      .tfs-close-btn i::before,
+      .tfs-menu-toggle i::before {
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============================================
+         ROOT WRAPPER – all components inside .tfs-root
+         ============================================ -->
+    <div class="tfs-root">
+      <!-- TRANSPARENT HEADER -->
+      <header class="tfs-navbar" id="tfsNavbar">
+        <!-- LOGO -->
+        <div class="tfs-logo">
+          <img src="Photos/tranaparent.png" alt="Finance With Ajay" />
+        </div>
+
+        <!-- NAV LINKS (desktop + slide) -->
+        <nav class="tfs-nav-links" id="tfsMenu">
+          <button
+            class="tfs-close-btn"
+            onclick="tfsToggleMenu()"
+            aria-label="Close menu"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+
+          <a href="https://financewithajay.co/home/">
+            <i class="fas fa-home"></i> Home
+          </a>
+          <a href="https://financewithajay.co/About%20us/">
+            <i class="fas fa-user"></i> About
+          </a>
+          <a href="https://financewithajay.co/Services/">
+            <i class="fas fa-cogs"></i> Services
+          </a>
+          <a href="https://financewithajay.co/investment-calculator/">
+            <i class="fas fa-calculator"></i> Investment Calculator
+          </a>
+          <a href="https://financewithajay.co/contact/">
+            <i class="fas fa-envelope"></i> Contact
+          </a>
+
+          <!-- mobile CTA (visible only inside slide) -->
+          <a
+            href="https://financewithajay.co/contact/"
+            class="tfs-btn-mobile"
+            id="tfsMobileCta"
+          >
+            <i class="fas fa-handshake"></i> Get in Touch
+          </a>
+        </nav>
+
+        <!-- DESKTOP CTA -->
+        <a
+          href="https://financewithajay.co/contact/"
+          class="tfs-btn-nav"
+          id="tfsNavCta"
+        >
+          <i class="fas fa-handshake"></i> Get in Touch
+        </a>
+
+        <!-- HAMBURGER -->
+        <button
+          class="tfs-menu-toggle"
+          onclick="tfsToggleMenu()"
+          aria-label="Open menu"
+          id="tfsHamburgerBtn"
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+      </header>
+
+      <!-- OVERLAY -->
+      <div class="tfs-overlay" id="tfsOverlay" onclick="tfsToggleMenu()"></div>
+    </div>
+
+    <script>
+      // ===== TOGGLE MENU (globally scoped function) =====
+      function tfsToggleMenu() {
+        const menu = document.getElementById("tfsMenu");
+        const overlay = document.getElementById("tfsOverlay");
+        const hamburger = document.getElementById("tfsHamburgerBtn");
+        menu.classList.toggle("tfs-active");
+        overlay.classList.toggle("tfs-active");
+        const isOpen = menu.classList.contains("tfs-active");
+        hamburger.setAttribute("aria-expanded", isOpen);
+      }
+
+      // close on Escape
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          const menu = document.getElementById("tfsMenu");
+          const overlay = document.getElementById("tfsOverlay");
+          if (menu.classList.contains("tfs-active")) {
+            menu.classList.remove("tfs-active");
+            overlay.classList.remove("tfs-active");
+            document
+              .getElementById("tfsHamburgerBtn")
+              .setAttribute("aria-expanded", "false");
+          }
+        }
+      });
+
+      // close on resize to desktop
+      window.addEventListener("resize", function () {
+        if (window.innerWidth > 900) {
+          const menu = document.getElementById("tfsMenu");
+          const overlay = document.getElementById("tfsOverlay");
+          if (menu.classList.contains("tfs-active")) {
+            menu.classList.remove("tfs-active");
+            overlay.classList.remove("tfs-active");
+            document
+              .getElementById("tfsHamburgerBtn")
+              .setAttribute("aria-expanded", "false");
+          }
+        }
+      });
+
+      // ===== SCROLL EFFECT – add .tfs-scrolled =====
+      const navbar = document.getElementById("tfsNavbar");
+
+      window.addEventListener("scroll", function () {
+        if (window.scrollY > 50) {
+          navbar.classList.add("tfs-scrolled");
+        } else {
+          navbar.classList.remove("tfs-scrolled");
+        }
+      });
+
+      // ensure CTA links are set (already in HTML, but keep consistency)
+      // (no additional action needed)
+    </script>
+  </body>
+</html>
+
+<!-- ----hero----- -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Financial Hero · Finance With Ajay</title>
+
+    <!-- Google Font (Poppins) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: #ffffff;
+        font-family:
+          "Poppins",
+          "Segoe UI",
+          system-ui,
+          -apple-system,
+          sans-serif;
+      }
+
+      .hero-wrapper {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      /* ===== HERO SECTION ===== */
+      .hero-section {
+        position: relative;
+        min-height: 660px;
+        padding: 140px 30px 0;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        text-align: center;
+        color: #ffffff;
+        background:
+          radial-gradient(
+            circle at 50% 0%,
+            rgba(78, 224, 213, 0.25),
+            transparent 24%
+          ),
+          radial-gradient(
+            circle at 10% 70%,
+            rgba(0, 195, 180, 0.12),
+            transparent 28%
+          ),
+          linear-gradient(135deg, #031728 0%, #061c2d 48%, #021421 100%);
+      }
+
+      /* atmospheric glow */
+      .hero-section::before {
+        content: "";
+        position: absolute;
+        width: 520px;
+        height: 520px;
+        top: -300px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 50%;
+        background: rgba(64, 224, 208, 0.2);
+        filter: blur(80px);
+        pointer-events: none;
+      }
+
+      /* subtle grain / star texture */
+      .hero-section::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        opacity: 0.28;
+        pointer-events: none;
+        background-image: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.42) 0.8px,
+          transparent 0.9px
+        );
+        background-size: 58px 58px;
+        mask-image: linear-gradient(to bottom, black, transparent 72%);
+      }
+
+      .hero-content,
+      .hero-profile,
+      .hero-stats {
+        position: relative;
+        z-index: 2;
+      }
+
+      /* ===== TAG ===== */
+      .hero-tag {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 18px;
+        margin-bottom: 22px;
+        border: 1px solid rgba(91, 235, 218, 0.28);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.055);
+        color: #9deee1;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        backdrop-filter: blur(10px);
+        text-transform: uppercase;
+      }
+
+      /* ===== HEADING ===== */
+      .hero-title {
+        max-width: 900px;
+        margin: 0 auto;
+        color: #ffffff;
+        font-size: clamp(40px, 5vw, 54px);
+        line-height: 1.08;
+        font-weight: 700;
+        letter-spacing: -0.045em;
+        text-wrap: balance;
+      }
+
+      .hero-title strong {
+        font-weight: 700;
+        background: linear-gradient(
+          90deg,
+          #1ee7d2 0%,
+          #8cf0c5 48%,
+          #ffffff 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      /* ===== DESCRIPTION ===== */
+      .hero-desc {
+        max-width: 690px;
+        margin: 25px auto 0;
+        color: rgba(232, 242, 247, 0.72);
+        font-size: 15px;
+        line-height: 1.75;
+        font-weight: 400;
+      }
+
+      .hero-desc strong {
+        color: #b9f4e8;
+        font-weight: 600;
+      }
+
+      /* ===== BUTTONS ===== */
+      .hero-buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+      }
+
+      .hero-buttons a {
+        text-decoration: none;
+      }
+
+      .hero-btn {
+        min-width: 150px;
+        min-height: 48px;
+        padding: 12px 22px;
+        border-radius: 60px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.25s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border: none;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .hero-btn-primary {
+        background: #16e4cf;
+        color: #03201f;
+        box-shadow: 0 12px 30px rgba(18, 224, 201, 0.25);
+        border: 1px solid #19e6ce;
+      }
+
+      .hero-btn-primary::after {
+        content: "↗";
+        width: 26px;
+        height: 26px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(0, 35, 34, 0.16);
+        font-size: 14px;
+        transition: 0.2s;
+      }
+
+      .hero-btn-secondary {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(78, 205, 197, 0.3);
+        color: #d9f8f3;
+        backdrop-filter: blur(8px);
+      }
+
+      .hero-btn-secondary::after {
+        content: "↗";
+        width: 26px;
+        height: 26px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(60, 218, 204, 0.08);
+        color: #7ce9dd;
+        font-size: 14px;
+        transition: 0.2s;
+      }
+
+      .hero-btn:hover {
+        transform: translateY(-3px);
+      }
+
+      .hero-btn-primary:hover {
+        box-shadow: 0 18px 40px rgba(18, 224, 201, 0.35);
+        background: #1cefd9;
+      }
+
+      .hero-btn-secondary:hover {
+        border-color: rgba(78, 205, 197, 0.65);
+        background: rgba(78, 205, 197, 0.08);
+      }
+
+      /* ===== PROFILE CARD ===== */
+      .hero-profile {
+        position: absolute;
+        right: 8%;
+        bottom: 92px;
+        width: 126px;
+        height: 126px;
+        border-radius: 28px;
+        padding: 5px;
+        background: linear-gradient(
+          145deg,
+          rgba(49, 233, 211, 0.75),
+          rgba(255, 255, 255, 0.08)
+        );
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+        transform: rotate(3deg);
+      }
+
+      .hero-profile img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        border-radius: 24px;
+      }
+
+      .hero-card {
+        position: absolute;
+        left: -48px;
+        bottom: -28px;
+        min-width: 190px;
+        padding: 12px 18px;
+        border: 1px solid rgba(114, 235, 221, 0.16);
+        border-radius: 16px;
+        background: rgba(3, 24, 40, 0.88);
+        text-align: left;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(14px);
+      }
+
+      .hero-card h4 {
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 2px;
+        letter-spacing: -0.01em;
+      }
+
+      .hero-card p {
+        color: rgba(222, 241, 241, 0.62);
+        font-size: 11px;
+        line-height: 1.4;
+      }
+
+      /* ===== STATS BAR ===== */
+      .hero-stats {
+        width: min(100%, 980px);
+        min-height: 112px;
+        margin-top: auto;
+        padding: 24px 30px;
+        display: grid;
+        grid-template-columns: 1.35fr repeat(3, 1fr);
+        align-items: center;
+        gap: 24px;
+        border-top: 1px solid rgba(83, 220, 207, 0.2);
+        background: linear-gradient(
+          90deg,
+          rgba(20, 178, 165, 0.08),
+          rgba(255, 255, 255, 0.015),
+          rgba(20, 178, 165, 0.05)
+        );
+        backdrop-filter: blur(2px);
+        border-radius: 0 0 24px 24px;
+      }
+
+      .hero-stat-intro {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        text-align: left;
+      }
+
+      .hero-stat-icon {
+        flex: 0 0 43px;
+        width: 43px;
+        height: 43px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #12e5ce;
+        color: #03201f;
+        font-size: 18px;
+        box-shadow: 0 0 0 7px rgba(18, 229, 206, 0.07);
+        font-weight: 300;
+      }
+
+      .hero-stat-intro p {
+        max-width: 230px;
+        color: rgba(232, 244, 245, 0.66);
+        font-size: 11px;
+        line-height: 1.5;
+        font-weight: 300;
+      }
+
+      .hero-stat {
+        min-width: 0;
+        padding-left: 20px;
+        border-left: 1px solid rgba(255, 255, 255, 0.08);
+        text-align: left;
+      }
+
+      .hero-stat h3 {
+        color: #ffffff;
+        font-size: 28px;
+        line-height: 1;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+      }
+
+      .hero-stat p {
+        margin-top: 8px;
+        color: rgba(225, 239, 241, 0.55);
+        font-size: 10px;
+        line-height: 1.4;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        font-weight: 400;
+      }
+
+      /* ===== ANIMATIONS ===== */
+      @keyframes heroFadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(22px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .hero-content {
+        animation: heroFadeUp 0.8s ease both;
+      }
+
+      .hero-profile {
+        animation: heroFadeUp 1s 0.2s ease both;
+      }
+
+      .hero-stats {
+        animation: heroFadeUp 1s 0.35s ease both;
+      }
+
+      /* ===== TABLET ===== */
+      @media (max-width: 900px) {
+        .hero-section {
+          min-height: 760px;
+          padding: 65px 24px 0;
+        }
+
+        .hero-title {
+          max-width: 760px;
+        }
+
+        .hero-desc {
+          max-width: 650px;
+        }
+
+        .hero-profile {
+          right: 4%;
+          bottom: 120px;
+          width: 100px;
+          height: 100px;
+        }
+
+        .hero-card {
+          left: -60px;
+          min-width: 170px;
+        }
+
+        .hero-stats {
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 14px;
+          padding: 20px;
+        }
+
+        .hero-stat-intro {
+          display: none;
+        }
+
+        .hero-stat {
+          border-left: 0;
+          padding-left: 0;
+          text-align: center;
+        }
+      }
+
+      /* ===== MOBILE ===== */
+      @media (max-width: 600px) {
+        .hero-section {
+          min-height: auto;
+          padding: 54px 18px 0;
+        }
+
+        .hero-tag {
+          font-size: 10px;
+          padding: 6px 14px;
+          margin-bottom: 18px;
+        }
+
+        .hero-title {
+          font-size: 37px;
+          line-height: 1.1;
+          letter-spacing: -0.035em;
+        }
+
+        .hero-desc {
+          margin-top: 19px;
+          font-size: 13px;
+          line-height: 1.65;
+        }
+
+        .hero-buttons {
+          width: 100%;
+          flex-direction: column;
+          margin-top: 25px;
+        }
+
+        .hero-btn {
+          width: 100%;
+          max-width: 300px;
+        }
+
+        .hero-profile {
+          position: relative;
+          right: auto;
+          bottom: auto;
+          margin: 35px 0 24px;
+          width: 105px;
+          height: 105px;
+          transform: none;
+        }
+
+        .hero-card {
+          left: 50%;
+          bottom: -30px;
+          transform: translateX(-50%);
+          text-align: center;
+          min-width: 170px;
+        }
+
+        .hero-stats {
+          width: calc(100% + 36px);
+          margin-left: -18px;
+          margin-top: 28px;
+          padding: 20px 12px;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 5px;
+          border-radius: 0;
+        }
+
+        .hero-stat h3 {
+          font-size: 22px;
+        }
+
+        .hero-stat p {
+          font-size: 8px;
+        }
+      }
+
+      @media (max-width: 380px) {
+        .hero-title {
+          font-size: 32px;
+        }
+
+        .hero-stat h3 {
+          font-size: 18px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="hero-wrapper">
+      <section class="hero-section">
+        <!-- main content -->
+        <div class="hero-content">
+          <div class="hero-tag">✨ Trusted Financial Solutions</div>
+
+          <div class="hero-title">
+            Plan Smarter, <strong>Protect Better,</strong> and Secure Your
+            Future
+          </div>
+
+          <div class="hero-desc">
+            We offer <strong>Chain of Documents Maintenance</strong> (CDM) — a
+            structured service that organizes, updates, and securely safeguards
+            your financial and insurance documents for easy access whenever
+            needed. It allows authorized family members to retrieve critical
+            information during crucial times, supporting continuity,
+            convenience, and peace of mind. This structured service is a key
+            differentiator of <strong>Finance With Ajay</strong>.
+          </div>
+
+          <div class="hero-buttons">
+            <a href="https://financewithajay.co/contact/">
+              <button class="hero-btn hero-btn-primary">Get in Touch</button>
+            </a>
+            <a href="#SFA">
+              <button class="hero-btn hero-btn-secondary">Our Services</button>
+            </a>
+          </div>
+        </div>
+
+        <!-- profile + card -->
+        <!-- <div class="hero-profile">
+          <img
+            src="https://financewithajay.co/wp-content/uploads/2026/06/WhatsApp-Image-2026-06-30-at-3.16.47-PM.jpeg"
+            alt="Ajay Parswani - Mutual Fund Distributor & Insurance Professional"
+            loading="lazy"
+          />
+          <div class="hero-card">
+            <h4>Ajay Parswani</h4>
+            <p>Financial Solutions Professional</p>
+          </div>
+        </div> -->
+      </section>
+    </div>
+  </body>
+</html>
