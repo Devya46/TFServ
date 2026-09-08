@@ -1,0 +1,954 @@
+<!-- ----- calculator ------ -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.5"
+    />
+    <title>FinancePro · 6 Calculators</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      /* ---------- reset & base ---------- */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .cal-body {
+        background: linear-gradient(145deg, #eaf3fa 0%, #f5faff 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5.8rem 10.2rem 2rem;
+        font-family:
+          "Inter",
+          "Segoe UI",
+          system-ui,
+          -apple-system,
+          sans-serif;
+      }
+
+      /* ---------- card ---------- */
+      .cal-card {
+        max-width: 1400px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+        border-radius: 56px;
+        box-shadow:
+          0 40px 90px rgba(0, 30, 50, 0.12),
+          0 8px 24px rgba(0, 0, 0, 0.02);
+        padding: 2.5rem 2.2rem;
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        transition: all 0.2s;
+      }
+
+      /* ---------- header ---------- */
+      .cal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 1.2rem;
+        gap: 0.8rem;
+      }
+      .cal-header h1 {
+        font-size: 2.1rem;
+        font-weight: 650;
+        color: #0b2a3c;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        letter-spacing: -0.4px;
+      }
+      .cal-header h1 i {
+        background: #166b80;
+        color: white;
+        padding: 0.5rem 0.7rem;
+        border-radius: 20px;
+        font-size: 1.6rem;
+        width: 3.4rem;
+        text-align: center;
+        box-shadow: 0 6px 14px rgba(22, 107, 128, 0.25);
+      }
+      .cal-header .cal-sub {
+        color: #1b5b6e;
+        background: rgba(210, 235, 245, 0.7);
+        padding: 0.45rem 1.6rem;
+        border-radius: 60px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        backdrop-filter: blur(2px);
+        border: 1px solid rgba(120, 180, 200, 0.2);
+      }
+
+      /* ---------- toggle group ---------- */
+      .cal-toggle-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin: 1.2rem 0 2.2rem;
+        background: rgba(235, 246, 252, 0.7);
+        padding: 0.5rem 0.8rem;
+        border-radius: 80px;
+        border: 1px solid rgba(180, 215, 230, 0.5);
+        backdrop-filter: blur(2px);
+        justify-content: center;
+      }
+      .cal-toggle-btn {
+        background: transparent;
+        border: none;
+        padding: 0.6rem 1.4rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: #1b4b5e;
+        cursor: pointer;
+        transition: 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: 1px solid transparent;
+        flex: 0 1 auto;
+        letter-spacing: 0.2px;
+        white-space: nowrap;
+      }
+      .cal-toggle-btn i {
+        font-size: 0.95rem;
+        width: 1.4rem;
+        color: #307e94;
+      }
+      .cal-toggle-btn:hover {
+        background: rgba(255, 255, 255, 0.7);
+        color: #307e94;
+        border-color: #aacfdf;
+        transform: translateY(-1px);
+      }
+      .cal-toggle-btn.active {
+        background: #1a5c6e;
+        color: white;
+        box-shadow: 0 10px 24px rgba(22, 85, 105, 0.25);
+        border-color: #1a5c6e;
+      }
+      .cal-toggle-btn.active i {
+        color: white;
+      }
+
+      /* ---------- content panel ---------- */
+      .cal-content-panel {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        margin-top: 0.2rem;
+      }
+
+      /* ---------- image side ---------- */
+      .cal-image-side {
+        flex: 1 1 38%;
+        min-width: 240px;
+        background: rgba(248, 252, 255, 0.7);
+        backdrop-filter: blur(2px);
+        border-radius: 32px;
+        padding: 1.6rem 1.6rem 1.2rem;
+        border: 1px solid rgba(190, 215, 230, 0.4);
+        display: flex;
+        flex-direction: column;
+        transition: all 0.2s;
+        box-shadow: 0 6px 20px rgba(0, 20, 30, 0.02);
+      }
+      .cal-image-side .cal-calc-image {
+        width: 100%;
+        aspect-ratio: 16/9;
+        background: #d3e6f0;
+        border-radius: 24px;
+        margin-bottom: 1rem;
+        overflow: hidden;
+        border: 1px solid #b8d4e2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s;
+      }
+      .cal-image-side .cal-calc-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .cal-image-side h2 {
+        font-size: 1.7rem;
+        font-weight: 600;
+        color: #04303e;
+        margin: 0.2rem 0 0.1rem;
+        letter-spacing: -0.3px;
+      }
+      .cal-image-side .cal-desc {
+        color: #1a4f60;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin: 0.2rem 0 0.7rem;
+        opacity: 0.9;
+      }
+      .cal-image-side .cal-formula-box {
+        background: rgba(210, 237, 248, 0.5);
+        backdrop-filter: blur(2px);
+        padding: 1rem 1.2rem;
+        border-radius: 20px;
+        margin: 0.2rem 0 0.4rem;
+        border-left: 5px solid #1a7a8f;
+        font-size: 0.95rem;
+        color: #0f3e50;
+        line-height: 1.6;
+      }
+      .cal-image-side .cal-formula-box .cal-formula {
+        font-weight: 650;
+        font-size: 1.05rem;
+        color: #04303e;
+        margin-bottom: 0.2rem;
+        font-family: "Courier New", monospace;
+        background: rgba(255, 255, 255, 0.5);
+        padding: 0.2rem 0.8rem;
+        border-radius: 12px;
+        display: inline-block;
+      }
+      .cal-image-side .cal-formula-box .cal-var-def {
+        display: block;
+        margin-top: 0.3rem;
+        font-size: 0.88rem;
+      }
+      .cal-image-side .cal-formula-box .cal-var-def strong {
+        color: #04303e;
+      }
+      .cal-image-side .cal-formula-box i {
+        color: #1a7a8f;
+        margin-right: 0.3rem;
+      }
+      .cal-image-side .cal-feature-tag {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-top: 0.7rem;
+      }
+      .cal-image-side .cal-feature-tag span {
+        background: rgba(30, 100, 120, 0.06);
+        padding: 0.2rem 1rem;
+        border-radius: 30px;
+        font-size: 0.7rem;
+        color: #1b5d72;
+        border: 1px solid rgba(60, 140, 165, 0.1);
+        font-weight: 500;
+        backdrop-filter: blur(2px);
+      }
+
+      /* ---------- calculator side ---------- */
+      .cal-calculator-side {
+        flex: 1 1 52%;
+        min-width: 280px;
+        background: rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(4px);
+        border-radius: 36px;
+        padding: 1.8rem 2.2rem 2.2rem;
+        box-shadow:
+          0 12px 32px rgba(0, 20, 30, 0.06),
+          inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        border: 1px solid rgba(190, 215, 230, 0.25);
+        transition: all 0.2s;
+      }
+      .cal-calculator-side h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #04303e;
+        margin-bottom: 1.6rem;
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        border-bottom: 2px solid rgba(160, 200, 220, 0.25);
+        padding-bottom: 0.8rem;
+        letter-spacing: -0.2px;
+      }
+      .cal-calculator-side h3 i {
+        color: #1a748b;
+        background: rgba(160, 200, 220, 0.2);
+        padding: 0.5rem 0.7rem;
+        border-radius: 18px;
+        font-size: 1.3rem;
+        width: 2.8rem;
+        text-align: center;
+      }
+
+      /* ---------- fields ---------- */
+      .cal-calc-field {
+        margin-bottom: 0.9rem;
+        position: relative;
+      }
+      .cal-calc-field label {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-weight: 600;
+        font-size: 0.78rem;
+        color: #124c5f;
+        margin-bottom: 0.25rem;
+        letter-spacing: 0.2px;
+        text-transform: uppercase;
+      }
+      .cal-calc-field label i {
+        color: #1f7a91;
+        font-size: 0.85rem;
+        width: 1.2rem;
+        text-align: center;
+      }
+      .cal-calc-field input {
+        width: 100%;
+        padding: 0.7rem 1.2rem 0.7rem 2.8rem;
+        border: 1px solid #cde0ea;
+        border-radius: 40px;
+        font-size: 1rem;
+        background: rgba(255, 255, 255, 0.8);
+        transition: 0.15s;
+        outline: none;
+        color: #0b2f3d;
+        font-weight: 500;
+        backdrop-filter: blur(2px);
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.02);
+      }
+      .cal-calc-field input:focus {
+        border-color: #2a90ae;
+        box-shadow:
+          0 0 0 4px rgba(42, 144, 174, 0.1),
+          inset 0 1px 3px rgba(0, 0, 0, 0.02);
+        background: white;
+      }
+      .cal-calc-field .cal-input-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #3d7f94;
+        font-size: 0.95rem;
+        pointer-events: none;
+        opacity: 0.7;
+        transition: 0.2s;
+      }
+      .cal-calc-field input:focus + .cal-input-icon,
+      .cal-calc-field input:focus ~ .cal-input-icon {
+        opacity: 1;
+        color: #1a6b80;
+      }
+
+      .cal-calc-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .cal-calc-row .cal-calc-field {
+        flex: 1 1 120px;
+      }
+
+      /* ---------- action ---------- */
+      .cal-calc-action {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 1.8rem;
+        gap: 1rem;
+      }
+      .cal-calc-action button {
+        background: #1a5b6e;
+        border: none;
+        color: white;
+        padding: 0.8rem 2.4rem;
+        border-radius: 60px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: 0.2s;
+        box-shadow: 0 8px 22px rgba(22, 85, 105, 0.2);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        border: 1px solid #1a5b6e;
+        letter-spacing: 0.2px;
+      }
+      .cal-calc-action button i {
+        font-size: 1rem;
+      }
+      .cal-calc-action button:hover {
+        background: #104a5c;
+        transform: scale(1.02);
+        box-shadow: 0 12px 30px rgba(16, 70, 90, 0.25);
+      }
+      .cal-calc-action .cal-result-box {
+        background: rgba(220, 241, 250, 0.4);
+        backdrop-filter: blur(2px);
+        padding: 0.5rem 1.8rem;
+        border-radius: 60px;
+        font-weight: 700;
+        color: #04303e;
+        font-size: 1.25rem;
+        border: 1px solid rgba(150, 195, 215, 0.3);
+        min-width: 150px;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.6);
+        box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.02);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+      }
+      .cal-calc-action .cal-result-box i {
+        color: #1a748b;
+        font-size: 1rem;
+        opacity: 0.7;
+      }
+      .cal-calc-action .cal-result-box span {
+        font-weight: 700;
+      }
+
+      /* ---------- footnote ---------- */
+      .cal-footnote {
+        font-size: 0.7rem;
+        color: #2d6679;
+        margin-top: 1.4rem;
+        opacity: 0.6;
+        text-align: right;
+        border-top: 1px solid rgba(180, 210, 225, 0.3);
+        padding-top: 1rem;
+        letter-spacing: 0.2px;
+      }
+
+      /* ---------- responsive ---------- */
+      @media (max-width: 1000px) {
+        .cal-card {
+          padding: 2rem 1.6rem;
+        }
+        .cal-image-side {
+          flex: 1 1 100%;
+        }
+        .cal-calculator-side {
+          flex: 1 1 100%;
+        }
+        .cal-toggle-btn {
+          padding: 0.5rem 1rem;
+          font-size: 0.8rem;
+        }
+      }
+
+      @media (max-width: 700px) {
+        .cal-body {
+          padding: 4rem 0.8rem 1rem;
+        }
+        .cal-card {
+          padding: 1.5rem 1rem;
+          border-radius: 36px;
+        }
+        .cal-header h1 {
+          font-size: 1.6rem;
+        }
+        .cal-header .cal-sub {
+          font-size: 0.7rem;
+          padding: 0.3rem 1rem;
+        }
+        .cal-toggle-group {
+          border-radius: 40px;
+          gap: 0.2rem;
+          padding: 0.4rem 0.4rem;
+        }
+        .cal-toggle-btn {
+          flex: 1 1 100%;
+          justify-content: center;
+          padding: 0.4rem 0.6rem;
+          font-size: 0.75rem;
+        }
+        .cal-toggle-btn i {
+          width: 1.2rem;
+        }
+        .cal-calculator-side {
+          padding: 1.2rem 1rem;
+        }
+        .cal-calc-action {
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .cal-calc-action .cal-result-box {
+          min-width: unset;
+        }
+        .cal-image-side h2 {
+          font-size: 1.4rem;
+        }
+        .cal-image-side .cal-formula-box {
+          font-size: 0.85rem;
+        }
+        .cal-calc-field input {
+          padding: 0.6rem 1rem 0.6rem 2.4rem;
+          font-size: 0.95rem;
+        }
+        .cal-calc-field .cal-input-icon {
+          left: 0.8rem;
+          font-size: 0.85rem;
+        }
+      }
+
+      @media (max-width: 450px) {
+        .cal-card {
+          padding: 1rem 0.6rem;
+          border-radius: 28px;
+        }
+        .cal-header h1 {
+          font-size: 1.3rem;
+          gap: 0.3rem;
+        }
+        .cal-header h1 i {
+          font-size: 1.2rem;
+          width: 2.8rem;
+          padding: 0.3rem;
+        }
+        .cal-calc-action button {
+          padding: 0.6rem 1.2rem;
+          font-size: 0.9rem;
+          justify-content: center;
+        }
+        .cal-calc-action .cal-result-box {
+          font-size: 1rem;
+          padding: 0.4rem 0.8rem;
+        }
+        .cal-image-side .cal-calc-image {
+          border-radius: 16px;
+        }
+        .cal-calculator-side h3 {
+          font-size: 1.2rem;
+        }
+      }
+
+      .fas,
+      .far {
+        pointer-events: none;
+      }
+      input[type="number"]::-webkit-inner-spin-button {
+        opacity: 0.3;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="cal-body">
+      <div class="cal-card">
+        <div class="cal-header">
+          <h1><i class="fas fa-calculator"></i>Investment Calculator</h1>
+        </div>
+
+        <div class="cal-toggle-group" id="calToggleGroup">
+          <button class="cal-toggle-btn active" data-target="sip">
+            <i class="fas fa-coins"></i> SIP
+          </button>
+          <button class="cal-toggle-btn" data-target="mutual">
+            <i class="fas fa-chart-pie"></i> Mutual
+          </button>
+          <button class="cal-toggle-btn" data-target="planner">
+            <i class="fas fa-route"></i> Planner
+          </button>
+          <button class="cal-toggle-btn" data-target="retire">
+            <i class="fas fa-umbrella-beach"></i> Retirement
+          </button>
+          <button class="cal-toggle-btn" data-target="tax">
+            <i class="fas fa-file-invoice-dollar"></i> Tax
+          </button>
+          <button class="cal-toggle-btn" data-target="financial">
+            <i class="fas fa-chart-line"></i> Financial
+          </button>
+        </div>
+
+        <div class="cal-content-panel" id="calContentPanel"></div>
+        <div class="cal-footnote">
+          <i class="fas fa-sync-alt fa-fw"></i> results are illustrative · each
+          formula with variable definitions
+        </div>
+      </div>
+    </section>
+
+    <script>
+      (function () {
+        const calculators = {
+          sip: {
+            name: "SIP Calculator",
+            image:
+              "https://financewithajay.co/wp-content/uploads/2026/07/SIP.png",
+            icon: "fa-coins",
+            formula: "M = P × {[(1 + r)^n - 1] / r} × (1 + r)",
+            varDef:
+              "M = maturity value, P = monthly SIP, r = monthly return (annual/12), n = months.",
+            description:
+              "Estimate future value of your monthly SIP investments with compounding.",
+            features: ["monthly step-up", "compounding", "long-term growth"],
+            fields: [
+              {
+                label: "Monthly SIP",
+                id: "sipAmount",
+                default: "5000",
+                icon: "fa-rupee-sign",
+              },
+              {
+                label: "Time (years)",
+                id: "sipYears",
+                default: "10",
+                icon: "fa-clock",
+              },
+              {
+                label: "Expected return (%)",
+                id: "sipRate",
+                default: "12",
+                icon: "fa-percent",
+              },
+            ],
+            resultLabel: "Maturity Value",
+            compute: (vals) => {
+              const p = parseFloat(vals[0]) || 0,
+                t = parseFloat(vals[1]) || 0,
+                r = parseFloat(vals[2]) || 0;
+              if (p <= 0 || t <= 0) return "0";
+              const monthlyRate = r / 12 / 100,
+                months = t * 12;
+              const fv =
+                p *
+                ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) *
+                (1 + monthlyRate);
+              return Math.round(fv).toLocaleString("en-IN");
+            },
+          },
+          mutual: {
+            name: "Mutual Fund",
+            image:
+              "https://financewithajay.co/wp-content/uploads/2026/07/Mutual-funds-1.png",
+            icon: "fa-chart-pie",
+            formula: "A = P × (1 + r)^n",
+            varDef:
+              "A = maturity value, P = lump sum, r = annual return, n = years.",
+            description:
+              "Project maturity value for a lump sum mutual fund investment.",
+            features: ["lump sum", "growth", "dividend option"],
+            fields: [
+              {
+                label: "Lump sum",
+                id: "mfLump",
+                default: "100000",
+                icon: "fa-rupee-sign",
+              },
+              {
+                label: "Time (years)",
+                id: "mfYears",
+                default: "8",
+                icon: "fa-clock",
+              },
+              {
+                label: "Expected return (%)",
+                id: "mfRate",
+                default: "10",
+                icon: "fa-percent",
+              },
+            ],
+            resultLabel: "Maturity Value",
+            compute: (vals) => {
+              const p = parseFloat(vals[0]) || 0,
+                t = parseFloat(vals[1]) || 0,
+                r = parseFloat(vals[2]) || 0;
+              if (p <= 0 || t <= 0) return "0";
+              return Math.round(p * Math.pow(1 + r / 100, t)).toLocaleString(
+                "en-IN",
+              );
+            },
+          },
+          planner: {
+            name: "Investment Planner",
+            image:
+              "https://financewithajay.co/wp-content/uploads/2026/07/Investment-Planner.png",
+            icon: "fa-route",
+            formula: "P = FV × r / [(1 + r)^n - 1]",
+            varDef:
+              "P = monthly investment, FV = target corpus, r = monthly return (annual/12), n = months.",
+            description:
+              "Monthly investment required to reach your financial goal.",
+            features: ["goal setting", "monthly required", "inflation adjust"],
+            fields: [
+              {
+                label: "Target corpus",
+                id: "goalTarget",
+                default: "5000000",
+                icon: "fa-bullseye",
+              },
+              {
+                label: "Time (years)",
+                id: "goalYears",
+                default: "12",
+                icon: "fa-clock",
+              },
+              {
+                label: "Expected return (%)",
+                id: "goalRate",
+                default: "11",
+                icon: "fa-percent",
+              },
+            ],
+            resultLabel: "Monthly investment",
+            compute: (vals) => {
+              const target = parseFloat(vals[0]) || 0,
+                t = parseFloat(vals[1]) || 0,
+                r = parseFloat(vals[2]) || 0;
+              if (target <= 0 || t <= 0 || r <= 0) return "0";
+              const monthlyRate = r / 12 / 100,
+                months = t * 12;
+              const monthly =
+                (target * monthlyRate) /
+                (Math.pow(1 + monthlyRate, months) - 1);
+              return Math.round(monthly).toLocaleString("en-IN");
+            },
+          },
+          retire: {
+            name: "Retirement",
+            image:
+              "https://financewithajay.co/wp-content/uploads/2026/07/retirement.png",
+            icon: "fa-umbrella-beach",
+            formula: "Corpus = (E × (1 + i)^n × 12) × 20",
+            varDef:
+              "E = monthly expense, i = inflation, n = years to retire. 20× based on 4% rule.",
+            description:
+              "Retirement corpus needed with inflation and 4% withdrawal rule.",
+            features: ["inflation", "post-retirement", "monthly expense"],
+            fields: [
+              {
+                label: "Monthly expense",
+                id: "retExpense",
+                default: "40000",
+                icon: "fa-wallet",
+              },
+              {
+                label: "Years to retire",
+                id: "retYears",
+                default: "25",
+                icon: "fa-clock",
+              },
+              {
+                label: "Inflation (%)",
+                id: "retInflation",
+                default: "6",
+                icon: "fa-percent",
+              },
+            ],
+            resultLabel: "Corpus needed",
+            compute: (vals) => {
+              let expense = parseFloat(vals[0]) || 0;
+              const years = parseFloat(vals[1]) || 0,
+                inflation = parseFloat(vals[2]) || 0;
+              if (expense <= 0 || years <= 0) return "0";
+              const futureExp = expense * Math.pow(1 + inflation / 100, years);
+              return Math.round(futureExp * 12 * 20).toLocaleString("en-IN");
+            },
+          },
+          tax: {
+            name: "Tax Saving",
+            image:
+              "https://financewithajay.co/wp-content/uploads/2026/07/Tax-saving.png",
+            icon: "fa-file-invoice-dollar",
+            formula: "Tax Saved = Tax(Old) - Tax(New)",
+            varDef:
+              "Old regime allows 80C (₹1.5L) & NPS (₹50K). New regime has standard deduction ₹75K.",
+            description: "Compare tax saving under old vs new tax regime.",
+            features: ["80C", "NPS", "regime comparison"],
+            fields: [
+              {
+                label: "Annual income",
+                id: "taxIncome",
+                default: "1200000",
+                icon: "fa-money-bill-wave",
+              },
+              {
+                label: "80C investment",
+                id: "tax80c",
+                default: "150000",
+                icon: "fa-file-invoice",
+              },
+              {
+                label: "NPS",
+                id: "taxNps",
+                default: "50000",
+                icon: "fa-piggy-bank",
+              },
+            ],
+            resultLabel: "Tax saved",
+            compute: (vals) => {
+              const income = parseFloat(vals[0]) || 0;
+              const inv80c = Math.min(parseFloat(vals[1]) || 0, 150000);
+              const nps = Math.min(parseFloat(vals[2]) || 0, 50000);
+              if (income <= 0) return "0";
+              const taxableOld = Math.max(0, income - inv80c - nps - 50000);
+              const taxableNew = Math.max(0, income - 75000);
+              const taxOld = Math.max(
+                0,
+                (taxableOld - 250000) * 0.05 +
+                  Math.max(0, taxableOld - 500000) * 0.05 +
+                  Math.max(0, taxableOld - 1000000) * 0.1,
+              );
+              const taxNew = Math.max(
+                0,
+                (taxableNew - 300000) * 0.05 +
+                  Math.max(0, taxableNew - 600000) * 0.05 +
+                  Math.max(0, taxableNew - 900000) * 0.1,
+              );
+              return Math.round(Math.max(0, taxOld - taxNew)).toLocaleString(
+                "en-IN",
+              );
+            },
+          },
+          financial: {
+            name: "NPV Calculator",
+            image:
+              "https://financewithajay.co/wp-content/uploads/2026/07/Investment.png",
+            icon: "fa-chart-line",
+            formula: "NPV = Σ [CFₜ / (1 + r)^t] - Initial",
+            varDef:
+              "CFₜ = cash flow in year t, r = discount rate, t = year. NPV measures profitability.",
+            description: "Net Present Value (NPV) for a series of cash flows.",
+            features: ["NPV", "discounting", "cash flow"],
+            fields: [
+              {
+                label: "Initial investment",
+                id: "finInit",
+                default: "500000",
+                icon: "fa-coins",
+              },
+              {
+                label: "Annual cash flow",
+                id: "finCash",
+                default: "120000",
+                icon: "fa-hand-holding-usd",
+              },
+              {
+                label: "Years",
+                id: "finYears",
+                default: "6",
+                icon: "fa-clock",
+              },
+              {
+                label: "Discount rate (%)",
+                id: "finRate",
+                default: "9",
+                icon: "fa-percent",
+              },
+            ],
+            resultLabel: "Net Present Value",
+            compute: (vals) => {
+              const init = parseFloat(vals[0]) || 0,
+                cf = parseFloat(vals[1]) || 0;
+              const years = parseFloat(vals[2]) || 0,
+                rate = parseFloat(vals[3]) || 0;
+              if (init <= 0 || years <= 0) return "0";
+              let npv = -init;
+              for (let i = 1; i <= years; i++)
+                npv += cf / Math.pow(1 + rate / 100, i);
+              return Math.round(npv).toLocaleString("en-IN");
+            },
+          },
+        };
+
+        let activeKey = "sip";
+        const panel = document.getElementById("calContentPanel");
+        const toggleBtns = document.querySelectorAll(".cal-toggle-btn");
+        // const IMAGE_URL =
+        //   "https://financewithajay.co/wp-content/uploads/2026/07/home-loan.png";
+
+        function renderCalculator(key) {
+          const data = calculators[key];
+          if (!data) return;
+
+          const imageHTML = `
+        <div class="cal-image-side">
+          <div class="cal-calc-image">
+            <img src="${data.image}" alt="${data.name}" loading="lazy">
+          </div>
+          <h2><i class="fas ${data.icon}" style="margin-right:8px;color:#1a7a8f;"></i> ${data.name}</h2>
+          <div class="cal-desc">${data.description}</div>
+          <div class="cal-formula-box">
+            <div class="cal-formula">${data.formula}</div>
+            <div class="cal-var-def"><i class="fas fa-info-circle"></i> ${data.varDef}</div>
+          </div>
+          <div class="cal-feature-tag">
+            ${data.features.map((f) => `<span><i class="fas fa-check-circle" style="font-size:0.6rem;margin-right:4px;"></i>${f}</span>`).join("")}
+          </div>
+        </div>
+      `;
+
+          let fieldsHTML = "";
+          data.fields.forEach((f) => {
+            fieldsHTML += `
+          <div class="cal-calc-field">
+            <label for="${f.id}"><i class="fas ${f.icon}"></i> ${f.label}</label>
+            <input type="number" id="${f.id}" value="${f.default}" step="100" min="0">
+            <i class="fas ${f.icon} cal-input-icon"></i>
+          </div>
+        `;
+          });
+
+          const calcHTML = `
+        <div class="cal-calculator-side">
+          <h3><i class="fas ${data.icon}"></i> ${data.name}</h3>
+          <form id="calForm" onsubmit="return false;">
+            ${fieldsHTML}
+            <div class="cal-calc-action">
+              <button type="button" id="calCalcBtn"><i class="fas fa-play"></i> Calculate</button>
+              <div class="cal-result-box" id="calResultDisplay">
+                <i class="fas fa-equals"></i> <span id="calResultValue">0</span>
+              </div>
+            </div>
+          </form>
+        </div>
+      `;
+
+          panel.innerHTML = imageHTML + calcHTML;
+
+          const btn = document.getElementById("calCalcBtn");
+          const resultSpan = document.getElementById("calResultValue");
+          const inputs = data.fields.map((f) => document.getElementById(f.id));
+
+          function computeResult() {
+            const values = inputs.map((inp) => (inp ? inp.value : "0"));
+            const res = data.compute(values);
+            if (resultSpan) resultSpan.textContent = res;
+          }
+
+          if (btn) {
+            btn.addEventListener("click", computeResult);
+            setTimeout(computeResult, 50);
+          }
+          inputs.forEach((inp) => {
+            if (inp)
+              inp.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") computeResult();
+              });
+          });
+
+          toggleBtns.forEach((btn) => btn.classList.remove("active"));
+          document
+            .querySelector(`.cal-toggle-btn[data-target="${key}"]`)
+            ?.classList.add("active");
+          activeKey = key;
+        }
+
+        toggleBtns.forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const target = this.dataset.target;
+            if (target && calculators[target]) renderCalculator(target);
+          });
+        });
+
+        renderCalculator("sip");
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,2011 @@
+<!-- ------header------ -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thakkar Finance Services</title>
+    <link rel="shortcut icon" href="Photos/tranaparent.png" type="image/png" />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome 6 (more reliable CDN) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      /* ----- ROOT (global variables, no override) ----- */
+      :root {
+        --primary: #58d916;
+        --primary-light: #7cff00;
+        --secondary: #2178ca;
+        --secondary-light: #49a6ff;
+
+        --background: #050b18;
+        --background-secondary: #0b1630;
+        --background-tertiary: #071d32;
+
+        --foreground: #ffffff;
+        --muted: #a9b7cc;
+        --dark: #172033;
+        --border: #203a5c;
+
+        --card: #0b1630;
+
+        --gradient-primary: linear-gradient(135deg, #58d916, #7cff00);
+        --gradient-secondary: linear-gradient(135deg, #2178ca, #49a6ff);
+        --gradient-brand: linear-gradient(135deg, #58d916, #2178ca, #49a6ff);
+      }
+
+      /* ----- GLOBAL RESET (scoped inside .tfs-root) ----- */
+      .tfs-root * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family:
+          "Poppins",
+          "Segoe UI",
+          system-ui,
+          -apple-system,
+          sans-serif;
+      }
+
+      .tfs-root {
+        font-family:
+          "Poppins",
+          "Segoe UI",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background: var(--background);
+        color: var(--foreground);
+        line-height: 1.5;
+      }
+
+      /* ============================================
+         TRANSPARENT HEADER – "tfs-" prefix all classes
+         ============================================ */
+      .tfs-navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 48px;
+
+        /* fully transparent default */
+        background: transparent;
+        border-bottom: 1px solid transparent;
+
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1002;
+        box-sizing: border-box;
+
+        transition:
+          background 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          backdrop-filter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          -webkit-backdrop-filter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          border-radius 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          padding 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          margin 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          border-color 0.3s ease;
+      }
+
+      /* scrolled state – round glass effect */
+      .tfs-navbar.tfs-scrolled {
+        background: rgba(5, 11, 24, 0.78);
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.45);
+        border-radius: 28px;
+        width: calc(100% - 48px);
+        height: 4rem;
+
+        margin: 12px 24px;
+        padding: 12px 32px;
+        border-bottom: 1px solid rgba(32, 58, 92, 0.3);
+      }
+
+      .tfs-navbar.tfs-scrolled .tfs-logo img {
+        height: 60px;
+      }
+
+      .tfs-navbar.tfs-scrolled .tfs-nav-links a {
+        color: rgba(255, 255, 255, 0.85);
+      }
+
+      /* ----- LOGO ----- */
+      .tfs-logo img {
+        height: 90px;
+        width: auto;
+        display: block;
+        transition:
+          height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          transform 0.2s;
+        filter: brightness(1.2) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+      }
+      .tfs-logo img:hover {
+        transform: scale(1.02);
+      }
+
+      /* ----- DESKTOP NAV LINKS ----- */
+      .tfs-nav-links {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+      }
+
+      .tfs-nav-links a {
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: 500;
+        font-size: 15px;
+        letter-spacing: 0.3px;
+        transition:
+          color 0.2s,
+          border-bottom 0.2s;
+        padding-bottom: 4px;
+        border-bottom: 2px solid transparent;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        white-space: nowrap;
+      }
+      .tfs-nav-links a:hover {
+        color: #ffffff;
+        border-bottom-color: var(--primary);
+      }
+
+      /* ----- DESKTOP CTA BUTTON ----- */
+      .tfs-btn-nav {
+        background: var(--gradient-primary);
+        color: var(--background);
+        padding: 10px 28px;
+        border-radius: 60px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        box-shadow: 0 8px 24px rgba(88, 217, 22, 0.3);
+        transition:
+          box-shadow 0.25s,
+          transform 0.2s,
+          background 0.2s,
+          padding 0.4s;
+        border: none;
+        white-space: nowrap;
+        margin-left: 8px;
+        cursor: pointer;
+      }
+      .tfs-btn-nav i {
+        font-size: 16px;
+        color: var(--background);
+      }
+      .tfs-btn-nav:hover {
+        box-shadow: 0 12px 32px rgba(88, 217, 22, 0.5);
+        transform: translateY(-2px);
+        background: linear-gradient(135deg, #6ae91e, #8cff2a);
+        color: var(--background);
+      }
+      .tfs-btn-nav:active {
+        transform: scale(0.96);
+      }
+
+      /* ----- HAMBURGER (mobile) ----- */
+      .tfs-menu-toggle {
+        display: none;
+        font-size: 28px;
+        cursor: pointer;
+        color: #ffffff;
+        background: transparent;
+        border: none;
+        padding: 4px 6px;
+        transition: opacity 0.2s;
+        z-index: 1001;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      }
+      .tfs-menu-toggle:hover {
+        opacity: 0.7;
+      }
+
+      /* ----- CLOSE BUTTON (inside slide) ----- */
+      .tfs-close-btn {
+        display: none;
+        position: absolute;
+        top: 18px;
+        right: 22px;
+        font-size: 28px;
+        cursor: pointer;
+        color: var(--foreground);
+        background: transparent;
+        border: none;
+        padding: 4px 8px;
+        transition: transform 0.2s;
+      }
+      .tfs-close-btn:hover {
+        transform: rotate(90deg);
+        color: var(--primary);
+      }
+
+      /* ----- OVERLAY ----- */
+      .tfs-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(5, 11, 24, 0.7);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.3s,
+          visibility 0.3s;
+        z-index: 999;
+      }
+      .tfs-overlay.tfs-active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      /* ----- MOBILE CTA (inside slide) ----- */
+      .tfs-btn-mobile {
+        display: none;
+      }
+
+      /* ============================================
+         RESPONSIVE (< 900px)
+         ============================================ */
+      @media (max-width: 900px) {
+        .tfs-navbar {
+          padding: 14px 24px;
+        }
+        .tfs-menu-toggle {
+          display: block;
+        }
+
+        /* hide desktop CTA inside navbar on mobile */
+        .tfs-navbar .tfs-btn-nav {
+          display: none;
+        }
+
+        /* slide menu */
+        .tfs-nav-links {
+          position: fixed;
+          top: 0;
+          left: -100%;
+          width: 280px;
+          max-width: 80%;
+          height: 100%;
+          background: var(--background-secondary);
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 72px 28px 40px;
+          gap: 18px;
+          transition: left 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
+          z-index: 1000;
+          box-shadow: 6px 0 40px rgba(0, 0, 0, 0.6);
+          overflow-y: auto;
+          border-right: 1px solid var(--border);
+          display: flex;
+        }
+        .tfs-nav-links.tfs-active {
+          left: 0;
+        }
+
+        .tfs-close-btn {
+          display: block;
+        }
+
+        .tfs-nav-links a {
+          font-size: 16px;
+          padding: 8px 0;
+          width: 100%;
+          border-bottom: 1px solid rgba(32, 58, 92, 0.3);
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          color: var(--muted);
+          border-bottom-color: transparent;
+          text-shadow: none;
+        }
+        .tfs-nav-links a i {
+          width: 24px;
+          color: var(--primary);
+          font-size: 18px;
+        }
+        .tfs-nav-links a:hover {
+          color: var(--foreground);
+          border-bottom-color: var(--primary);
+          padding-left: 6px;
+        }
+
+        .tfs-nav-links .tfs-btn-mobile {
+          display: inline-flex;
+          margin-top: 20px;
+          background: var(--gradient-primary);
+          color: var(--background);
+          padding: 12px 28px;
+          border-radius: 60px;
+          text-decoration: none;
+          align-items: center;
+          gap: 12px;
+          font-size: 15px;
+          font-weight: 600;
+          box-shadow: 0 8px 20px rgba(88, 217, 22, 0.3);
+          transition: 0.2s;
+          border: none;
+          width: auto;
+          border-bottom: none !important;
+          letter-spacing: 0.3px;
+          cursor: pointer;
+        }
+        .tfs-nav-links .tfs-btn-mobile i {
+          color: var(--background);
+          font-size: 18px;
+        }
+        .tfs-nav-links .tfs-btn-mobile:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 12px 28px rgba(88, 217, 22, 0.45);
+          padding-left: 28px;
+          background: linear-gradient(135deg, #6ae91e, #8cff2a);
+        }
+
+        /* mobile scrolled state – full width, no round */
+        .tfs-navbar.tfs-scrolled {
+          border-radius: 0;
+          width: 100%;
+          margin: 0;
+          padding: 14px 24px;
+          background: rgba(5, 11, 24, 0.85);
+          backdrop-filter: blur(16px) saturate(180%);
+          -webkit-backdrop-filter: blur(16px) saturate(180%);
+          border-bottom: 1px solid rgba(32, 58, 92, 0.3);
+          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .tfs-navbar.tfs-scrolled .tfs-logo img {
+          height: 44px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .tfs-navbar {
+          padding: 12px 16px;
+        }
+        .tfs-nav-links {
+          width: 260px;
+          padding: 68px 20px 30px;
+        }
+        .tfs-navbar.tfs-scrolled {
+          padding: 12px 16px;
+        }
+      }
+
+      /* Fix icon display issues */
+      .tfs-nav-links a i,
+      .tfs-btn-nav i,
+      .tfs-btn-mobile i,
+      .tfs-close-btn i,
+      .tfs-menu-toggle i {
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .tfs-nav-links a i.fas,
+      .tfs-btn-nav i.fas,
+      .tfs-btn-mobile i.fas,
+      .tfs-close-btn i.fas,
+      .tfs-menu-toggle i.fas {
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+      }
+
+      .tfs-nav-links a i.fa-solid,
+      .tfs-btn-nav i.fa-solid,
+      .tfs-btn-mobile i.fa-solid {
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+      }
+
+      /* Ensure icons show in all browsers */
+      .tfs-nav-links a i::before,
+      .tfs-btn-nav i::before,
+      .tfs-btn-mobile i::before,
+      .tfs-close-btn i::before,
+      .tfs-menu-toggle i::before {
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============================================
+         ROOT WRAPPER – all components inside .tfs-root
+         ============================================ -->
+    <div class="tfs-root">
+      <!-- TRANSPARENT HEADER -->
+      <header class="tfs-navbar" id="tfsNavbar">
+        <!-- LOGO -->
+        <div class="tfs-logo">
+          <img src="Photos/tranaparent.png" alt="Finance With Ajay" />
+        </div>
+
+        <!-- NAV LINKS (desktop + slide) -->
+        <nav class="tfs-nav-links" id="tfsMenu">
+          <button
+            class="tfs-close-btn"
+            onclick="tfsToggleMenu()"
+            aria-label="Close menu"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+
+          <a href="index.html"> <i class="fas fa-home"></i> Home </a>
+          <a href="about.html"> <i class="fas fa-user"></i> About </a>
+          <a href="services.html"> <i class="fas fa-cogs"></i> Services </a>
+          <a href="calculator.html">
+            <i class="fas fa-calculator"></i> Investment Calculator
+          </a>
+          <a href="contact.html"> <i class="fas fa-envelope"></i> Contact </a>
+
+          <!-- mobile CTA (visible only inside slide) -->
+          <a href="contact.html" class="tfs-btn-mobile" id="tfsMobileCta">
+            <i class="fas fa-handshake"></i> Get in Touch
+          </a>
+        </nav>
+
+        <!-- DESKTOP CTA -->
+        <a href="contact.html" class="tfs-btn-nav" id="tfsNavCta">
+          <i class="fas fa-handshake"></i> Get in Touch
+        </a>
+
+        <!-- HAMBURGER -->
+        <button
+          class="tfs-menu-toggle"
+          onclick="tfsToggleMenu()"
+          aria-label="Open menu"
+          id="tfsHamburgerBtn"
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+      </header>
+
+      <!-- OVERLAY -->
+      <div class="tfs-overlay" id="tfsOverlay" onclick="tfsToggleMenu()"></div>
+    </div>
+
+    <script>
+      // ===== TOGGLE MENU (globally scoped function) =====
+      function tfsToggleMenu() {
+        const menu = document.getElementById("tfsMenu");
+        const overlay = document.getElementById("tfsOverlay");
+        const hamburger = document.getElementById("tfsHamburgerBtn");
+        menu.classList.toggle("tfs-active");
+        overlay.classList.toggle("tfs-active");
+        const isOpen = menu.classList.contains("tfs-active");
+        hamburger.setAttribute("aria-expanded", isOpen);
+      }
+
+      // close on Escape
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          const menu = document.getElementById("tfsMenu");
+          const overlay = document.getElementById("tfsOverlay");
+          if (menu.classList.contains("tfs-active")) {
+            menu.classList.remove("tfs-active");
+            overlay.classList.remove("tfs-active");
+            document
+              .getElementById("tfsHamburgerBtn")
+              .setAttribute("aria-expanded", "false");
+          }
+        }
+      });
+
+      // close on resize to desktop
+      window.addEventListener("resize", function () {
+        if (window.innerWidth > 900) {
+          const menu = document.getElementById("tfsMenu");
+          const overlay = document.getElementById("tfsOverlay");
+          if (menu.classList.contains("tfs-active")) {
+            menu.classList.remove("tfs-active");
+            overlay.classList.remove("tfs-active");
+            document
+              .getElementById("tfsHamburgerBtn")
+              .setAttribute("aria-expanded", "false");
+          }
+        }
+      });
+
+      // ===== SCROLL EFFECT – add .tfs-scrolled =====
+      const navbar = document.getElementById("tfsNavbar");
+
+      window.addEventListener("scroll", function () {
+        if (window.scrollY > 50) {
+          navbar.classList.add("tfs-scrolled");
+        } else {
+          navbar.classList.remove("tfs-scrolled");
+        }
+      });
+
+      // ensure CTA links are set (already in HTML, but keep consistency)
+      // (no additional action needed)
+    </script>
+  </body>
+</html>
+
+<!-- ----page header--- -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finance with Ajay · full width header</title>
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ----- reset & base ----- */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .body-head {
+        font-family: "Inter", sans-serif;
+        background: #f0f4fa;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        width: 100%;
+      }
+
+      /* ----- FULL WIDTH PAGE HEADER (no card, no max-width) ----- */
+      .page-header {
+        min-width: 99vw; /* full viewport width */
+        min-height: 280px; /* short height – as requested */
+        height: auto;
+        /* background image – replace with your own */
+        background-image: url("https://images.unsplash.com/vector-1770724921949-1b68e80f7541?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGJhY2tncm91bmQlMjB0ZXh0dXJlfGVufDB8fDB8fHww");
+        background-size: cover;
+        background-position: center 30%;
+        background-repeat: no-repeat;
+        position: relative;
+        isolation: isolate;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6.5rem 2rem 3rem;
+        /* no border-radius, no box-shadow – full width, no card */
+      }
+
+      /* dark overlay for readability (full width) */
+      .page-header::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 20, 40, 0.55) 0%,
+          rgba(0, 10, 25, 0.7) 100%
+        );
+        z-index: 0;
+        backdrop-filter: blur(1px);
+      }
+
+      /* content wrapper – sits above overlay */
+      .header-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        max-width: 820px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0.25rem 0;
+      }
+
+      /* tagline / badge */
+      .tagline-badge {
+        display: inline-block;
+        background: rgba(255, 215, 100, 0.15);
+        backdrop-filter: blur(4px);
+        border: 1px solid rgba(255, 215, 100, 0.25);
+        padding: 0.3rem 1.2rem;
+        border-radius: 60px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: #ffe9b6;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      /* main heading – "Finance with Ajay" */
+      .main-headline {
+        font-size: clamp(2.4rem, 8vw, 3.2rem);
+        font-weight: 600;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: white;
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        margin-bottom: 0.5rem;
+      }
+      .main-headline span {
+        background: linear-gradient(135deg, #fbd26a, #f8b84a);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 0 2px 12px rgba(251, 210, 106, 0.25);
+      }
+
+      /* sub-text – proud to be part of India’s growth story */
+      .sub-text {
+        font-size: 16px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.92);
+        text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+        letter-spacing: 0.3px;
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 0.25rem 1.2rem;
+        background: rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(2px);
+        border-radius: 40px;
+        display: inline-block;
+      }
+
+      .sub-text i {
+        font-style: normal;
+        display: inline-block;
+      }
+      .sub-text i::after {
+        content: " 🇮🇳";
+        margin-left: 4px;
+        font-size: 0.9em;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+      }
+
+      /* decorative divider – short height keeps it minimal */
+      .divider-line {
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #f8b84a, #fbd26a);
+        margin: 0.5rem auto 0.75rem auto;
+        border-radius: 6px;
+        opacity: 0.7;
+      }
+
+      /* ----- responsive fine-tune (full width, no card) ----- */
+      @media (max-width: 640px) {
+        .page-header {
+          min-height: 220px;
+          padding: 1.8rem 1rem;
+        }
+        .tagline-badge {
+          font-size: 0.6rem;
+          padding: 0.2rem 0.9rem;
+          margin-bottom: 0.5rem;
+        }
+        .main-headline {
+          font-size: clamp(1.8rem, 10vw, 2.8rem);
+        }
+        .sub-text {
+          font-size: clamp(0.8rem, 2.5vw, 1.1rem);
+          padding: 0.15rem 1rem;
+          background: rgba(0, 0, 0, 0.15);
+        }
+        .divider-line {
+          width: 40px;
+          height: 2px;
+          margin: 0.3rem auto 0.5rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .page-header {
+          min-height: 180px;
+          padding: 1.2rem 0.8rem;
+        }
+        .sub-text {
+          background: rgba(0, 0, 0, 0.2);
+          backdrop-filter: blur(2px);
+          padding: 0.2rem 0.8rem;
+          border-radius: 30px;
+        }
+      }
+
+      /* extra small height */
+      @media (max-height: 500px) {
+        .page-header {
+          min-height: 300px;
+          padding: 1rem 1.5rem;
+        }
+        .main-headline {
+          font-size: clamp(1.5rem, 6vw, 2.2rem);
+        }
+        .sub-text {
+          font-size: clamp(0.7rem, 2vw, 1rem);
+        }
+        .tagline-badge {
+          display: none;
+        }
+        .divider-line {
+          margin: 0.1rem auto 0.3rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ===== FULL WIDTH PAGE HEADER (no card, no border-radius, no shadow) ===== -->
+    <section class="body-head">
+      <header
+        class="page-header"
+        role="banner"
+        aria-label="Finance with Ajay header"
+      >
+        <div class="header-content">
+          <!-- small badge -->
+          <div class="tagline-badge">🇮🇳 · Financial clarity</div>
+
+          <!-- main headline -->
+          <h1 class="main-headline">Finance with <span>Ajay</span></h1>
+
+          <!-- subtle divider -->
+          <div class="divider-line" aria-hidden="true"></div>
+
+          <!-- tagline -->
+          <p class="sub-text">
+            <i>Proud to be a part of India’s growth story</i>
+          </p>
+        </div>
+      </header>
+    </section>
+  </body>
+</html>
+
+<!-- ---- about--- -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ajay Paraswani · Premium Story</title>
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ============================================================
+                   RESET & BASE
+                   ============================================================ */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .journey-body {
+        font-family: "Inter", sans-serif;
+        background: #f0f4f8;
+        min-height: 100vh;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+      }
+
+      /* ============================================================
+                   MAIN WRAPPER
+                   ============================================================ */
+      .journey-wrapper {
+        width: 100%;
+        max-width: 100%;
+        background: #ffffff;
+        border-radius: 0;
+        box-shadow: none;
+        overflow: visible;
+        position: relative;
+        border: none;
+        padding: 5rem 8rem;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        opacity: 0;
+        animation: journeyFadeUp 0.6s ease forwards;
+      }
+
+      @keyframes journeyFadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .journey-wrapper::before,
+      .journey-wrapper::after {
+        display: none;
+      }
+
+      /* ============================================================
+                   FLEX LAYOUT
+                   ============================================================ */
+      .journey-flex {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        min-height: 100vh;
+        background: transparent;
+        gap: 30px;
+        align-items: stretch;
+      }
+
+      /* ============================================================
+                   LEFT: SCROLLABLE CONTENT
+                   ============================================================ */
+      .journey-content {
+        flex: 0 0 55%;
+        max-width: 55%;
+        padding: 50px 45px 70px 45px;
+        background: #ffffff;
+        overflow-y: auto;
+        height: 100vh;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+      .journey-content::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* ============================================================
+                   RIGHT: FIXED IMAGE
+                   ============================================================ */
+      .journey-image {
+        flex: 0 0 41%;
+        max-width: 41%;
+        border-radius: 31px;
+        position: sticky;
+        top: 0;
+        height: 90vh;
+        overflow: hidden;
+        background: #ffffff;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .journey-image-card {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .journey-image-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .journey-image-card::after {
+        display: none;
+      }
+      .journey-floating-badge {
+        display: none;
+      }
+
+      /* ============================================================
+                   BADGE
+                   ============================================================ */
+      .journey-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, #1a56db, #3b82f6);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        padding: 8px 22px;
+        border-radius: 50px;
+        text-transform: uppercase;
+        margin-bottom: 22px;
+        box-shadow: 0 4px 15px rgba(26, 86, 219, 0.2);
+      }
+
+      .journey-badge i {
+        font-size: 14px;
+      }
+
+      /* ============================================================
+                   HEADINGS & TEXT
+                   ============================================================ */
+      .journey-title {
+        font-family: "Playfair Display", serif;
+        font-size: 44px;
+        font-weight: 700;
+        color: #0a1e3c;
+        line-height: 1.15;
+        margin-bottom: 4px;
+      }
+
+      .journey-title span {
+        background: linear-gradient(135deg, #1a56db, #3b82f6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .journey-subhead {
+        font-size: 17px;
+        color: #4a5a72;
+        font-weight: 400;
+        margin-bottom: 32px;
+        padding: 14px 20px;
+        background: rgba(59, 130, 246, 0.06);
+        border-left: 4px solid #3b82f6;
+        border-radius: 0 12px 12px 0;
+        line-height: 1.7;
+      }
+
+      .journey-subhead i {
+        color: #3b82f6;
+        margin-right: 8px;
+      }
+
+      .journey-heading {
+        font-family: "Playfair Display", serif;
+        font-size: 22px;
+        font-weight: 700;
+        color: #0a1e3c;
+        margin-top: 32px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .journey-heading i {
+        color: #3b82f6;
+        font-size: 20px;
+        width: 36px;
+        height: 36px;
+        background: rgba(59, 130, 246, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+      }
+
+      .journey-text {
+        font-size: 15.5px;
+        line-height: 1.9;
+        color: #2a3a52;
+        margin-bottom: 14px;
+        font-weight: 400;
+      }
+
+      .journey-text strong {
+        color: #1a56db;
+        font-weight: 600;
+      }
+
+      /* ============================================================
+                   HIGHLIGHT QUOTE
+                   ============================================================ */
+      .journey-highlight {
+        background: linear-gradient(135deg, #f0f6ff, #e8f0fe);
+        padding: 22px 28px;
+        border-radius: 16px;
+        border: 1px solid rgba(59, 130, 246, 0.15);
+        margin: 22px 0 28px 0;
+        box-shadow: 0 4px 20px rgba(26, 86, 219, 0.06);
+        position: relative;
+      }
+
+      .journey-highlight::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 20%;
+        bottom: 20%;
+        width: 4px;
+        background: linear-gradient(180deg, #1a56db, #60a5fa);
+        border-radius: 4px;
+      }
+
+      .journey-highlight i {
+        color: #3b82f6;
+        font-size: 22px;
+        margin-right: 12px;
+        opacity: 0.7;
+      }
+
+      .journey-highlight .journey-quote-text {
+        font-size: 19px;
+        color: #0a1e3c;
+        font-weight: 500;
+        padding-left: 8px;
+        font-family: "Playfair Display", serif;
+      }
+
+      /* ============================================================
+                   ACHIEVEMENT GRID
+                   ============================================================ */
+      .journey-achievements {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin: 18px 0 28px 0;
+        padding: 0;
+      }
+
+      .journey-achievements li {
+        list-style: none;
+        font-size: 14.5px;
+        color: #1a2a44;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 18px;
+        background: #ffffff;
+        border-radius: 12px;
+        border: 1px solid #e8edf5;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .journey-achievements li:hover {
+        border-color: #3b82f6;
+        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.1);
+        transform: translateY(-2px);
+      }
+
+      .journey-achievements li i {
+        color: #3b82f6;
+        font-size: 16px;
+        width: 28px;
+        height: 28px;
+        background: rgba(59, 130, 246, 0.08);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .journey-achievements li strong {
+        color: #1a56db;
+        font-weight: 700;
+      }
+
+      /* ============================================================
+                   FINAL QUOTE CARD
+                   ============================================================ */
+      .journey-quote-card {
+        margin: 28px 0 10px 0;
+        padding: 24px 32px;
+        background: linear-gradient(135deg, #0a1e3c, #1a3a6a);
+        border-radius: 16px;
+        text-align: center;
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        box-shadow: 0 8px 30px rgba(26, 86, 219, 0.15);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .journey-quote-card::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(
+          circle,
+          rgba(59, 130, 246, 0.08),
+          transparent
+        );
+        border-radius: 50%;
+      }
+
+      .journey-quote-card::after {
+        content: "";
+        position: absolute;
+        bottom: -40%;
+        left: -10%;
+        width: 150px;
+        height: 150px;
+        background: radial-gradient(
+          circle,
+          rgba(96, 165, 250, 0.06),
+          transparent
+        );
+        border-radius: 50%;
+      }
+
+      .journey-quote-card i {
+        color: #60a5fa;
+        font-size: 28px;
+        margin: 0 10px;
+        opacity: 0.5;
+        position: relative;
+        z-index: 1;
+      }
+
+      .journey-quote-card .journey-quote-text {
+        font-size: 20px;
+        font-weight: 500;
+        color: #ffffff;
+        font-family: "Playfair Display", serif;
+        position: relative;
+        z-index: 1;
+        letter-spacing: 0.3px;
+      }
+
+      .journey-quote-card .journey-quote-author {
+        display: block;
+        font-size: 13px;
+        color: #93b5e8;
+        font-weight: 400;
+        margin-top: 10px;
+        font-family: "Inter", sans-serif;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ============================================================
+                   RESPONSIVE — COMPLETELY FIXED BREAKING
+                   ============================================================ */
+
+      /* --- LARGE DESKTOP (1200px+) --- */
+      @media (max-width: 1200px) {
+        .journey-wrapper {
+          padding: 4rem 5rem;
+        }
+        .journey-content {
+          padding: 40px 35px 60px 35px;
+        }
+      }
+
+      /* --- SMALL DESKTOP / LARGE TABLET (992px - 1199px) --- */
+      @media (max-width: 1024px) {
+        .journey-wrapper {
+          padding: 3rem 3.5rem;
+        }
+
+        .journey-content {
+          flex: 0 0 52%;
+          max-width: 52%;
+          padding: 35px 30px 50px 30px;
+        }
+
+        .journey-image {
+          flex: 0 0 44%;
+          max-width: 44%;
+          height: 85vh;
+          border-radius: 24px;
+        }
+
+        .journey-title {
+          font-size: 38px;
+        }
+      }
+
+      /* --- TABLET (768px - 991px) --- */
+      @media (max-width: 991px) {
+        .journey-wrapper {
+          padding: 2.5rem 2rem;
+        }
+
+        .journey-flex {
+          flex-direction: column;
+          min-height: auto;
+          gap: 20px;
+        }
+
+        .journey-content {
+          flex: 0 0 100%;
+          max-width: 100%;
+          height: auto;
+          padding: 30px 24px 40px 24px;
+          overflow-y: visible;
+        }
+
+        .journey-image {
+          flex: 0 0 100%;
+          max-width: 100%;
+          position: relative;
+          top: 0;
+          height: 50vh;
+          min-height: 300px;
+          border-radius: 20px;
+          margin-top: 0;
+          order: -1;
+        }
+
+        .journey-image-card img {
+          border-radius: 20px;
+        }
+
+        .journey-title {
+          font-size: 36px;
+        }
+
+        .journey-achievements {
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+        }
+
+        .journey-achievements li {
+          padding: 12px 15px;
+          font-size: 14px;
+        }
+      }
+
+      /* --- SMALL TABLET (600px - 767px) --- */
+      @media (max-width: 767px) {
+        .journey-wrapper {
+          padding: 2rem 1.5rem;
+        }
+
+        .journey-content {
+          padding: 25px 18px 35px 18px;
+        }
+
+        .journey-title {
+          font-size: 32px;
+        }
+
+        .journey-subhead {
+          font-size: 15px;
+          padding: 12px 16px;
+        }
+
+        .journey-heading {
+          font-size: 20px;
+        }
+
+        .journey-highlight {
+          padding: 18px 20px;
+        }
+        .journey-highlight .journey-quote-text {
+          font-size: 17px;
+        }
+
+        .journey-achievements {
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+        }
+        .journey-achievements li {
+          font-size: 13px;
+          padding: 10px 12px;
+          gap: 10px;
+        }
+        .journey-achievements li i {
+          width: 24px;
+          height: 24px;
+          font-size: 13px;
+        }
+
+        .journey-quote-card {
+          padding: 20px 22px;
+        }
+        .journey-quote-card .journey-quote-text {
+          font-size: 18px;
+        }
+
+        .journey-image {
+          height: 40vh;
+          min-height: 250px;
+          border-radius: 16px;
+        }
+        .journey-image-card img {
+          border-radius: 16px;
+        }
+      }
+
+      /* --- MOBILE (up to 480px) --- */
+      @media (max-width: 480px) {
+        .journey-wrapper {
+          padding: 1rem 0.8rem;
+        }
+
+        .journey-content {
+          padding: 20px 14px 30px 14px;
+        }
+
+        .journey-title {
+          font-size: 26px;
+        }
+
+        .journey-subhead {
+          font-size: 13px;
+          padding: 10px 12px;
+          margin-bottom: 22px;
+        }
+
+        .journey-heading {
+          font-size: 17px;
+          margin-top: 24px;
+          gap: 8px;
+        }
+        .journey-heading i {
+          width: 30px;
+          height: 30px;
+          font-size: 13px;
+        }
+
+        .journey-text {
+          font-size: 14px;
+          line-height: 1.8;
+        }
+
+        .journey-badge {
+          font-size: 10px;
+          padding: 6px 16px;
+          margin-bottom: 16px;
+          letter-spacing: 1px;
+        }
+        .journey-badge i {
+          font-size: 11px;
+        }
+
+        .journey-highlight {
+          padding: 14px 16px;
+          margin: 16px 0 20px 0;
+        }
+        .journey-highlight .journey-quote-text {
+          font-size: 15px;
+          padding-left: 4px;
+        }
+        .journey-highlight i {
+          font-size: 18px;
+          margin-right: 8px;
+        }
+
+        .journey-achievements {
+          grid-template-columns: 1fr;
+          gap: 6px;
+          margin: 12px 0 20px 0;
+        }
+        .journey-achievements li {
+          font-size: 12.5px;
+          padding: 10px 12px;
+          gap: 10px;
+          border-radius: 10px;
+        }
+        .journey-achievements li i {
+          width: 22px;
+          height: 22px;
+          font-size: 12px;
+        }
+
+        .journey-quote-card {
+          padding: 16px 16px;
+          margin: 20px 0 8px 0;
+          border-radius: 14px;
+        }
+        .journey-quote-card .journey-quote-text {
+          font-size: 15px;
+        }
+        .journey-quote-card i {
+          font-size: 20px;
+          margin: 0 6px;
+        }
+        .journey-quote-card .journey-quote-author {
+          font-size: 11px;
+          margin-top: 8px;
+        }
+
+        .journey-image {
+          height: 35vh;
+          min-height: 200px;
+          border-radius: 14px;
+        }
+        .journey-image-card img {
+          border-radius: 14px;
+        }
+      }
+
+      /* --- EXTRA SMALL (320px) --- */
+      @media (max-width: 360px) {
+        .journey-wrapper {
+          padding: 0.6rem 0.4rem;
+        }
+        .journey-content {
+          padding: 16px 10px 24px 10px;
+        }
+        .journey-title {
+          font-size: 22px;
+        }
+        .journey-subhead {
+          font-size: 12px;
+          padding: 8px 10px;
+        }
+        .journey-heading {
+          font-size: 15px;
+        }
+        .journey-text {
+          font-size: 13px;
+        }
+        .journey-highlight .journey-quote-text {
+          font-size: 13px;
+        }
+        .journey-achievements li {
+          font-size: 11.5px;
+          padding: 8px 10px;
+        }
+        .journey-quote-card .journey-quote-text {
+          font-size: 13px;
+        }
+        .journey-image {
+          height: 30vh;
+          min-height: 160px;
+        }
+      }
+
+      /* ============================================================
+                   ELEMENTOR-SPECIFIC SAFETY (no change to desktop)
+                   ============================================================ */
+      .elementor-widget-wrap .journey-wrapper,
+      .elementor-section .journey-wrapper {
+        padding: 5rem 8rem;
+      }
+
+      @media (max-width: 1200px) {
+        .elementor-widget-wrap .journey-wrapper,
+        .elementor-section .journey-wrapper {
+          padding: 4rem 5rem;
+        }
+      }
+
+      @media (max-width: 1024px) {
+        .elementor-widget-wrap .journey-wrapper,
+        .elementor-section .journey-wrapper {
+          padding: 3rem 3.5rem;
+        }
+      }
+
+      @media (max-width: 991px) {
+        .elementor-widget-wrap .journey-wrapper,
+        .elementor-section .journey-wrapper {
+          padding: 2.5rem 2rem;
+        }
+      }
+
+      @media (max-width: 767px) {
+        .elementor-widget-wrap .journey-wrapper,
+        .elementor-section .journey-wrapper {
+          padding: 2rem 1.5rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .elementor-widget-wrap .journey-wrapper,
+        .elementor-section .journey-wrapper {
+          padding: 1rem 0.8rem;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .elementor-widget-wrap .journey-wrapper,
+        .elementor-section .journey-wrapper {
+          padding: 0.6rem 0.4rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="journey-body">
+      <div class="journey-wrapper">
+        <div class="journey-flex">
+          <!-- RIGHT: FIXED IMAGE -->
+          <div class="journey-image">
+            <div class="journey-image-card">
+              <img
+                src="https://financewithajay.co/wp-content/uploads/2026/06/WhatsApp-Image-2026-06-30-at-3.16.47-PM.jpeg"
+                alt="Ajay Paraswani · Finance &amp; Leadership"
+              />
+            </div>
+          </div>
+          <!-- LEFT: SCROLLABLE CONTENT -->
+          <div class="journey-content">
+            <div class="journey-badge">
+              <i class="fas fa-gem"></i> Transformation Story
+            </div>
+
+            <h1 class="journey-title">From Jewels to <span>Finance</span></h1>
+            <div class="journey-subhead">
+              <i class="fas fa-quote-left"></i>
+              The Ajay Parswani Story — Transformation, Resilience &amp;
+              Multidimensional Leadership
+            </div>
+
+            <h2 class="journey-heading">
+              <i class="fas fa-gem"></i> The Sparkling Beginnings
+            </h2>
+            <p class="journey-text">
+              Ajay's journey began in the heart of India's luxury jewellery
+              business. Growing up surrounded by exquisite craftsmanship and the
+              rich legacy of gold, diamonds, and gemstones, he mastered the art
+              of dealing with high-value assets, discerning clients, and market
+              dynamics.
+            </p>
+            <p class="journey-text">
+              He quickly gained a reputation for
+              <strong>honesty, precision, and an eye for quality</strong>—traits
+              that would serve him well in every future endeavour. However, even
+              as he thrived in the world of jewellery, he knew his ambitions
+              extended beyond just one industry.
+            </p>
+
+            <h2 class="journey-heading">
+              <i class="fas fa-arrow-right"></i> The Shift
+            </h2>
+            <p class="journey-text">
+              Observing the financial challenges and investment struggles of his
+              clients, Ajay developed a deep curiosity about finance and
+              financial planning. He realized that, like jewellery, money too
+              needed careful crafting—<strong
+                >investment, risk management, and long-term vision</strong
+              >.
+            </p>
+            <p class="journey-text">
+              Determined to master this new domain, he transitioned into the
+              world of financial services. He became an
+              <strong>IRDA-approved Insurance Specialist</strong>, an authorized
+              person with <strong>Motilal Oswal Financial Services</strong>, and
+              a sought-after
+              <strong
+                >Mutual Fund Distribution and Tax Planning Professional</strong
+              >.
+            </p>
+
+            <!-- HIGHLIGHT QUOTE -->
+            <div class="journey-highlight">
+              <i class="fas fa-quote-left"></i>
+              <span class="journey-quote-text"
+                >“Every individual deserves financial freedom and security, just
+                like they value precious jewels.”</span
+              >
+              <i class="fas fa-quote-right"></i>
+            </div>
+
+            <h2 class="journey-heading">
+              <i class="fas fa-trophy"></i> Key Achievements
+            </h2>
+            <ul class="journey-achievements">
+              <li>
+                <i class="fas fa-check-circle"></i> Experienced financial
+                services professional
+              </li>
+              <li>
+                <i class="fas fa-check-circle"></i>
+                <strong>Zero-rejection</strong> track record in insurance claims
+              </li>
+              <li>
+                <i class="fas fa-check-circle"></i> Business tax &amp; financial
+                planning support
+              </li>
+              <li>
+                <i class="fas fa-check-circle"></i> <strong>#1 Rank</strong> —
+                Niva Bupa (West Zone)
+              </li>
+            </ul>
+
+            <h2 class="journey-heading">
+              <i class="fas fa-rocket"></i> Mastering Financial Freedom
+            </h2>
+            <p class="journey-text">
+              In just eight years, Ajay not only mastered the art of financial
+              freedom for himself but also developed a passion for helping
+              others achieve the same. He understands that true wealth isn't
+              just about earning money—it's about
+              <strong
+                >investments, financial planning, and long-term
+                protection</strong
+              >.
+            </p>
+            <p class="journey-text">
+              Now, he is committed to supporting individuals and businesses in
+              organising their financial priorities and making informed
+              decisions for their future.
+            </p>
+
+            <!-- FINAL QUOTE CARD -->
+            <div class="journey-quote-card">
+              <i class="fas fa-quote-left"></i>
+              <span class="journey-quote-text"
+                >True wealth isn't just about earning — it's about
+                securing.</span
+              >
+              <i class="fas fa-quote-right"></i>
+              <span class="journey-quote-author">— Ajay Paraswani</span>
+            </div>
+            <div style="height: 10px"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      (function () {
+        console.log(
+          "✨ Journey story — Elementor‑safe, no breaking, all classes prefixed with 'journey-'",
+        );
+      })();
+    </script>
+  </body>
+</html>
+
+<!-- ---------more------ -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.5"
+    />
+    <title>About Us · Finance with Ajay</title>
+    <style>
+      /* ——— reset / base (phy- prefix, no leaks) ——— */
+      .phy-body {
+        all: initial; /* kill inherited theme styles */
+        font-family:
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          "Helvetica Neue",
+          sans-serif;
+        background: #f8faff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+        line-height: 1.5;
+        box-sizing: border-box;
+      }
+      .phy-body * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* ——— main container ——— */
+      .phy-about-section {
+        all: initial; /* kill any theme wrapper styles */
+        display: block;
+        width: 100%;
+        max-width: 1440px;
+        padding: 0.5rem 5.5rem 4rem;
+        position: relative;
+        font-family:
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          "Helvetica Neue",
+          sans-serif;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+      }
+      .phy-about-section * {
+        box-sizing: border-box;
+      }
+
+      .phy-grid {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+        gap: 2.5rem 3rem;
+      }
+
+      /* ——— image ——— */
+      .phy-image {
+        flex: 1 1 46%;
+        min-width: 350px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .phy-image img {
+        width: 100%;
+        height: auto;
+        max-height: 520px;
+        object-fit: cover;
+        border-radius: 20px;
+        box-shadow: 0 12px 28px rgba(10, 75, 122, 0.1);
+        transition: transform 0.25s ease;
+        display: block;
+        background: #eef3fc;
+      }
+      .phy-image img:hover {
+        transform: scale(1.01);
+      }
+
+      /* ——— content ——— */
+      .phy-content {
+        flex: 1 1 50%;
+        min-width: 280px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .phy-content h2 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.2;
+        color: #0a2e4a;
+        margin-bottom: 0.3rem;
+        font-family: inherit;
+      }
+      .phy-sub-headline {
+        font-size: 1.3rem;
+        font-weight: 500;
+        color: #0a4b7a;
+        margin-bottom: 1rem;
+        border-left: 5px solid #0a4b7a;
+        padding-left: 1rem;
+        font-family: inherit;
+      }
+      .phy-lead {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: #1f3a4e;
+        margin-bottom: 1.2rem;
+        font-weight: 400;
+        font-family: inherit;
+      }
+      .phy-highlight {
+        color: #0a4b7a;
+        font-weight: 500;
+      }
+
+      /* ——— mission block ——— */
+      .phy-mission {
+        margin: 0px;
+        padding: 18px 24px;
+        background: linear-gradient(135deg, #f6fbff 0%, #eef6fd 100%);
+        border-left: 5px solid #0a4b7a;
+        border-radius: 18px;
+        box-shadow: 0 10px 25px rgba(10, 75, 122, 0.08);
+      }
+      .phy-mission-title {
+        display: inline-block;
+        font-size: 0.9rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: #0a4b7a;
+        margin-bottom: 0.8rem;
+        font-family: inherit;
+      }
+      .phy-mission blockquote {
+        margin: 0;
+        font-size: 1.12rem;
+        line-height: 1.6;
+        color: #15344d;
+        font-style: italic;
+        position: relative;
+        padding-left: 4px;
+        font-weight: 600;
+        font-family: inherit;
+      }
+
+      /* ——— feature tags ——— */
+      .phy-features {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem 1.2rem;
+        margin-top: 0.8rem;
+        padding-top: 0.8rem;
+        border-top: 2px dashed #d4e1f5;
+      }
+      .phy-features span {
+        background: white;
+        padding: 0.4rem 1rem;
+        border-radius: 40px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #0a3b5e;
+        border: 1px solid #b8cee8;
+        letter-spacing: 0.02em;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-family: inherit;
+      }
+      .phy-features .phy-blue-bg {
+        background: #0a4b7a;
+        color: white;
+        border-color: #0a4b7a;
+      }
+      .phy-features .phy-icon-only {
+        background: transparent;
+        border: none;
+        padding: 0.2rem 0.4rem;
+        font-size: 1.8rem;
+        line-height: 1;
+        color: #0a3b5e;
+        box-shadow: none;
+        border-radius: 0;
+        letter-spacing: 0;
+      }
+      .phy-features .phy-icon-only.phy-blue-emoji {
+        background: #0a4b7a10;
+        border-radius: 60px;
+        padding: 0.2rem 0.7rem;
+        border: 1px solid #b8cee8;
+        font-size: 1.6rem;
+      }
+
+      /* ——— responsive ——— */
+      @media screen and (max-width: 800px) {
+        .phy-about-section {
+          padding: 2rem 1rem;
+        }
+        .phy-grid {
+          gap: 1.8rem;
+        }
+        .phy-content h2 {
+          font-size: 2rem;
+        }
+        .phy-sub-headline {
+          font-size: 1.1rem;
+        }
+        .phy-image img {
+          max-height: 380px;
+          border-radius: 16px;
+        }
+      }
+      @media screen and (max-width: 550px) {
+        .phy-about-section {
+          padding: 1.5rem 0.8rem;
+        }
+        .phy-content h2 {
+          font-size: 1.7rem;
+        }
+        .phy-sub-headline {
+          font-size: 1rem;
+          padding-left: 0.7rem;
+        }
+        .phy-lead {
+          font-size: 1rem;
+        }
+        .phy-mission {
+          padding: 0.8rem 1.2rem;
+        }
+        .phy-mission blockquote {
+          font-size: 1rem;
+        }
+        .phy-features span {
+          font-size: 0.8rem;
+          padding: 0.3rem 0.8rem;
+        }
+        .phy-features .phy-icon-only {
+          font-size: 1.5rem;
+        }
+        .phy-image img {
+          max-height: 280px;
+          border-radius: 14px;
+        }
+      }
+      @media screen and (max-width: 400px) {
+        .phy-content h2 {
+          font-size: 1.5rem;
+        }
+        .phy-sub-headline {
+          font-size: 0.9rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- all classes prefixed with "phy-" to avoid theme collisions -->
+    <div class="phy-body">
+      <section class="phy-about-section">
+        <div class="phy-grid">
+          <!-- content -->
+          <div class="phy-content">
+            <h2>Sharing Knowledge.<br />Building Financial Confidence.</h2>
+
+            <div class="phy-sub-headline">
+              Financial Education & Awareness · Ajay Paraswani
+            </div>
+
+            <p class="phy-lead">
+              Financial knowledge is the foundation of financial confidence.
+              When people understand their finances, they can make informed
+              decisions, avoid costly mistakes, and plan for their long-term
+              goals with confidence.<br />
+              <br />
+
+              Ajay conducts financial awareness sessions, investor workshops,
+              and educational seminars that simplify complex financial concepts
+              into practical strategies, helping individuals, families,
+              professionals, and business owners build long-term financial
+              confidence.
+            </p>
+
+            <!-- mission statement -->
+            <div class="phy-mission">
+              <span class="phy-mission-title">His Guiding Philosophy</span>
+              <blockquote>
+                “Financial knowledge is the foundation of financial freedom.
+                When people truly understand their finances, they make smarter
+                decisions, avoid costly mistakes, and build lasting wealth with
+                confidence.”
+              </blockquote>
+            </div>
+
+            <!-- optional feature tags (kept for style, no change) -->
+            <!-- <div class="phy-features">
+              <span>📘 Financial Literacy</span>
+              <span class="phy-blue-bg">🎯 Investor Education</span>
+              <span class="phy-icon-only phy-blue-emoji">🧠</span>
+              <span class="phy-icon-only">⚡</span>
+            </div> -->
+          </div>
+          <!-- image -->
+          <div class="phy-image">
+            <img
+              src="https://financewithajay.co/wp-content/uploads/2026/07/WhatsApp-Image-2026-07-02-at-12.27.25-AM-1.jpeg"
+              alt="Ajay Paraswani – Finance with Ajay"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
+
+<!-- -------more ---- -->

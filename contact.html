@@ -1,0 +1,2290 @@
+<!-- ----- page header---- -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finance with Ajay · Elementor Safe</title>
+    <!-- Google Font (same as original, lightweight) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ----- reset & base (minimal, no global leakage) ----- */
+      .el-safe-header * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .el-safe-header {
+        font-family: "Inter", sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 0;
+        background: transparent; /* inherit from page */
+      }
+
+      /* ----- FULL WIDTH PAGE HEADER (no card, no max-width, no duplicate issues) ----- */
+      .el-page-header {
+        width: 100%; /* full viewport width */
+        min-height: 310px; /* short height as requested */
+        height: auto;
+        /* background image – replace with your own URL if needed */
+        background-image: url("https://images.unsplash.com/photo-1644088379091-d574269d422f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzZ8fGNvbnRhY3QlMjBiYWNrZ3JvdW5kfGVufDB8fDB8fHww");
+        background-size: cover;
+        background-position: center 30%;
+        background-repeat: no-repeat;
+        position: relative;
+        isolation: isolate;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5.5rem 2rem 2rem;
+        /* no border-radius, no box-shadow – full width, no card */
+      }
+
+      /* dark overlay for readability (full width) – pseudo-element */
+      .el-page-header::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 20, 40, 0.55) 0%,
+          rgba(0, 10, 25, 0.7) 100%
+        );
+        z-index: 0;
+        backdrop-filter: blur(1px);
+        pointer-events: none; /* ensures clicks pass through if needed */
+      }
+
+      /* content wrapper – sits above overlay */
+      .el-header-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        max-width: 820px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0.25rem 0;
+      }
+
+      /* tagline / badge */
+      .el-tagline-badge {
+        display: inline-block;
+        background: rgba(255, 215, 100, 0.15);
+        backdrop-filter: blur(4px);
+        border: 1px solid rgba(255, 215, 100, 0.25);
+        padding: 0.3rem 1.2rem;
+        border-radius: 60px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: #ffe9b6;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      /* main heading – "Finance with Ajay" */
+      .el-main-headline {
+        font-size: clamp(2.4rem, 8vw, 3.2rem);
+        font-weight: 600;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: white;
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        margin-bottom: 0.5rem;
+      }
+      .el-main-headline span {
+        background: linear-gradient(135deg, #fbd26a, #f8b84a);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 0 2px 12px rgba(251, 210, 106, 0.25);
+      }
+
+      /* sub-text – proud to be part of India’s growth story (custom copy) */
+      .el-sub-text {
+        font-size: 16px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.92);
+        text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+        letter-spacing: 0.3px;
+        max-width: 700px;
+        margin: 11px auto;
+        padding: 0.25rem 1.2rem;
+        background: rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(2px);
+        border-radius: 40px;
+        display: inline-block;
+      }
+
+      .el-sub-text i {
+        font-style: normal;
+        display: inline-block;
+      }
+
+      /* decorative divider – short height keeps it minimal */
+      .el-divider-line {
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #f8b84a, #fbd26a);
+        margin: 0.5rem auto 0.75rem auto;
+        border-radius: 6px;
+        opacity: 0.7;
+      }
+
+      /* ----- responsive fine-tune (full width, no card) ----- */
+      @media (max-width: 640px) {
+        .el-page-header {
+          min-height: 220px;
+          padding: 1.8rem 1rem;
+        }
+        .el-tagline-badge {
+          font-size: 0.6rem;
+          padding: 0.2rem 0.9rem;
+          margin-bottom: 0.5rem;
+        }
+        .el-main-headline {
+          font-size: clamp(1.8rem, 10vw, 2.8rem);
+        }
+        .el-sub-text {
+          font-size: clamp(0.8rem, 2.5vw, 1.1rem);
+          padding: 0.15rem 1rem;
+          background: rgba(0, 0, 0, 0.15);
+        }
+        .el-divider-line {
+          width: 40px;
+          height: 2px;
+          margin: 0.3rem auto 0.5rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .el-page-header {
+          min-height: 180px;
+          padding: 1.2rem 0.8rem;
+        }
+        .el-sub-text {
+          background: rgba(0, 0, 0, 0.2);
+          backdrop-filter: blur(2px);
+          padding: 0.2rem 0.8rem;
+          border-radius: 30px;
+        }
+      }
+
+      /* extra small height – kept but commented in original; uncomment if needed */
+      /*
+    @media (max-height: 500px) {
+      .el-page-header {
+        min-height: 300px;
+        padding: 1rem 1.5rem;
+      }
+      .el-main-headline {
+        font-size: clamp(1.5rem, 6vw, 2.2rem);
+      }
+      .el-sub-text {
+        font-size: clamp(0.7rem, 2vw, 1rem);
+      }
+      .el-tagline-badge {
+        display: none;
+      }
+      .el-divider-line {
+        margin: 0.1rem auto 0.3rem;
+      }
+    }
+    */
+
+      /* ----- Elementor safe: unique class on wrapper, no ID conflicts, no duplicate risk ----- */
+      /* all selectors are scoped inside .el-safe-header and .el-page-header */
+      /* no global styles that could leak into Elementor */
+    </style>
+  </head>
+  <body>
+    <!-- ===== ELEMENTOR SAFE WRAPPER ===== -->
+    <!-- using a unique class (el-safe-header) to prevent duplication issues -->
+    <section class="el-safe-header">
+      <!-- ===== FULL WIDTH PAGE HEADER (no card, no border-radius, no shadow) ===== -->
+      <header
+        class="el-page-header"
+        role="banner"
+        aria-label="Finance with Ajay header"
+      >
+        <div class="el-header-content">
+          <!-- small badge -->
+          <div class="el-tagline-badge">Contact Us</div>
+
+          <!-- main headline -->
+          <h1 class="el-main-headline">Let's Talk <span>Finance</span></h1>
+
+          <!-- subtle divider -->
+          <div class="el-divider-line" aria-hidden="true"></div>
+
+          <!-- tagline – custom copy to match the brief -->
+          <p class="el-sub-text">
+            Have questions? <br />
+            Our team is ready to assist you with every financial decision.
+          </p>
+        </div>
+      </header>
+    </section>
+  </body>
+</html>
+
+<!-- -------- details ----- -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>FinanceWithAjay | Contact</title>
+    <!-- Google Fonts: clean sans + modern -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome 6 (Free) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #ffffff;
+        font-family: "Inter", sans-serif;
+        color: #0b1a33;
+        line-height: 1.5;
+      }
+
+      /* ----- BUSINESS INFO: WHITE BACKGROUND, PREMIUM BLUE/WHITE CARDS ----- */
+      .contact-section {
+        background: #ffffff;
+        padding: 2.8rem 1.5rem 3rem;
+        width: 100%;
+      }
+
+      .info-grid {
+        max-width: 1250px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: stretch;
+        gap: 1.5rem;
+      }
+
+      /* clean white cards with blue accents */
+      .contact-card {
+        background: #ffffff;
+        border-radius: 24px;
+        padding: 1.5rem 1.2rem;
+        flex: 1;
+        min-width: 230px;
+        max-width: 240px;
+        transition: all 0.25s ease;
+        border: 1px solid #e3edf9;
+        box-shadow:
+          0 6px 16px rgba(20, 60, 120, 0.04),
+          0 2px 6px rgba(0, 0, 0, 0.02);
+        text-align: center;
+        background: #fbfdff;
+      }
+
+      .contact-card:hover {
+        transform: translateY(-4px);
+        border-color: #9bc1e0;
+        box-shadow:
+          0 20px 30px -12px rgba(20, 70, 140, 0.12),
+          0 0 0 1px rgba(50, 120, 200, 0.12);
+        background: #ffffff;
+      }
+
+      .card-icon {
+        font-size: 2rem;
+        color: #1f6390;
+        margin-bottom: 0.5rem;
+        display: inline-block;
+        transition: color 0.2s;
+        background: #eaf3fc;
+        padding: 0.4rem 0.6rem;
+        border-radius: 30px;
+        line-height: 1;
+      }
+
+      .contact-card:hover .card-icon {
+        color: #0b4b78;
+        background: #dce9f7;
+      }
+
+      .card-label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 700;
+        color: #2f6a94;
+        margin-bottom: 0.3rem;
+        margin-top: 0.1rem;
+      }
+
+      .card-value {
+        font-size: 15px;
+        font-weight: 600;
+        color: #0b1f38;
+        line-height: 1.4;
+        word-break: break-word;
+      }
+
+      .card-value a {
+        text-decoration: none;
+        color: #0b1f38;
+        font-weight: 600;
+        transition: color 0.2s;
+      }
+
+      .card-value a:hover {
+        color: #1f6aa0;
+      }
+
+      .card-sub {
+        font-size: 0.7rem;
+        color: #3e78a8;
+        letter-spacing: 0.3px;
+        margin-top: 0.3rem;
+        border-top: 1px dashed #d4e2f0;
+        padding-top: 0.5rem;
+        font-weight: 500;
+      }
+
+      .address-detail {
+        font-size: 15px;
+        font-weight: 500;
+        color: #152d47;
+        line-height: 1.5;
+      }
+
+      .address-detail i {
+        color: #2773a5;
+        margin-right: 4px;
+      }
+
+      .card-divider-blue {
+        width: 28px;
+        height: 2px;
+        background: #7baed9;
+        margin: 0.5rem auto 0.4rem;
+        border-radius: 10px;
+        opacity: 0.5;
+      }
+
+      .map-link {
+        font-size: 0.75rem;
+        display: inline-block;
+        margin-top: 0.3rem;
+        color: #1f6aa0;
+        font-weight: 500;
+        text-decoration: none;
+        border-bottom: 1px dotted #7baed9;
+      }
+
+      .map-link i {
+        margin-right: 4px;
+      }
+
+      /* Responsive */
+      @media (max-width: 780px) {
+        .contact-card {
+          min-width: 180px;
+          max-width: 200px;
+          padding: 1.2rem 0.8rem;
+        }
+        .card-value {
+          font-size: 0.8rem;
+        }
+        .address-detail {
+          font-size: 0.7rem;
+        }
+      }
+
+      @media (max-width: 620px) {
+        .info-grid {
+          gap: 1rem;
+        }
+        .contact-card {
+          min-width: 160px;
+          max-width: 180px;
+        }
+      }
+
+      @media (max-width: 540px) {
+        .contact-card {
+          flex-basis: calc(50% - 0.8rem);
+          max-width: none;
+          min-width: 140px;
+        }
+        .contact-section {
+          padding: 1.8rem 0.8rem;
+        }
+      }
+
+      /* elegant separator */
+      .blue-separator {
+        width: 50px;
+        height: 2px;
+        background: #7baed9;
+        margin: 1.8rem auto 0.6rem;
+        border-radius: 20px;
+        opacity: 0.4;
+      }
+
+      .footer-note {
+        text-align: center;
+        font-size: 0.7rem;
+        color: #5f7f9c;
+        letter-spacing: 0.5px;
+        margin-top: 0.8rem;
+      }
+
+      .fa-phone-alt,
+      .fa-envelope,
+      .fa-location-dot,
+      .fa-clock {
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.02));
+      }
+
+      /* no emojis, only icons */
+    </style>
+  </head>
+  <body>
+    <!-- CONTACT CARDS : white bg, blue accents -->
+    <div class="contact-section">
+      <div class="info-grid">
+        <!-- Phone -->
+        <div class="contact-card">
+          <div class="card-icon"><i class="fas fa-phone-alt"></i></div>
+          <div class="card-label">Contact</div>
+          <div class="card-value">
+            <a href="tel:+919876543210">+91 93223 38575</a>
+          </div>
+          <div class="card-divider-blue"></div>
+          <div class="card-sub">
+            <i class="fas fa-clock" style="margin-right: 6px"></i> Mon–Sat :
+            9:00 AM – 6:00 PM
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="contact-card">
+          <div class="card-icon"><i class="fas fa-envelope"></i></div>
+          <div class="card-label">Email</div>
+          <div class="card-value">
+            <a href="mailto:info@financewithajay.com"
+              >financewithajay@gmail.com</a
+            >
+          </div>
+          <div class="card-divider-blue"></div>
+          <div class="card-sub">
+            <i class="fas fa-reply-all" style="margin-right: 4px"></i> we reply
+            within 24hrs
+          </div>
+        </div>
+
+        <!-- Location (Bandra & Andheri) + Map link -->
+        <div class="contact-card">
+          <div class="card-icon"><i class="fas fa-location-dot"></i></div>
+          <div class="card-label">Location</div>
+          <div class="card-value address-detail">
+            <i class="fas fa-building" style="color: #2f6a94"></i> Bandra &
+            Andheri,<br />Mumbai, Maharashtra
+          </div>
+          <div class="card-divider-blue"></div>
+          <div class="card-sub">
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=Finance+with+Ajay,+Mumbai"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="map-link"
+            >
+              <i class="fas fa-map-pin"></i> Open in Maps
+            </a>
+          </div>
+        </div>
+
+        <!-- Office hours (extra card) with clock -->
+        <div class="contact-card">
+          <div class="card-icon"><i class="fas fa-clock"></i></div>
+          <div class="card-label">Business Hours</div>
+          <div class="card-value" style="font-weight: 500; font-size: 0.9rem">
+            Mon – Sat<br />
+            <span style="font-weight: 700; color: #0b2a4a"
+              >9:00 AM – 6:00 PM</span
+            >
+          </div>
+          <div class="card-divider-blue"></div>
+          <div class="card-sub">
+            <i class="fas fa-calendar-check" style="margin-right: 5px"></i>
+            Sunday closed
+          </div>
+        </div>
+      </div>
+
+      <!-- subtle separator + brand line -->
+      <div class="blue-separator"></div>
+      <!-- <div class="footer-note">
+        <i
+          class="fas fa-circle"
+          style="font-size: 5px; color: #2f6a94; margin: 0 6px"
+        ></i>
+        FinanceWithAjay — clarity & trust
+        <i
+          class="fas fa-circle"
+          style="font-size: 5px; color: #2f6a94; margin: 0 6px"
+        ></i>
+      </div> -->
+    </div>
+  </body>
+</html>
+
+<!-- ------ form ------ -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finance · Smart Popup</title>
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      /* ----- reset + base (con- prefix) ----- */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Nunito", "Segoe UI", system-ui, sans-serif;
+      }
+
+      .con-body {
+        background: white;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 8.5rem;
+        margin: 0;
+        max-width: 1600px;
+        width: 100%;
+      }
+
+      /* ----- wider card ----- */
+      .con-card {
+        max-width: 1400px; /* wider */
+        width: 100%;
+        background: #ffffff;
+        border-radius: 48px;
+        /*box-shadow: 0 30px 60px -20px rgba(0, 20, 30, 0.3);*/
+        display: grid;
+        grid-template-columns: 0.9fr 1.4fr; /* more space for form */
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        transition: box-shadow 0.3s;
+      }
+      /*.con-card:hover {*/
+      /*  box-shadow: 0 40px 70px -15px rgba(0, 20, 30, 0.45);*/
+      /*}*/
+
+      /* Elementor widget wrapper – prevent overflow */
+      .elementor-widget-html {
+        overflow: hidden;
+      }
+
+      /* ----- left image side ----- */
+      .con-image-side {
+        background-image:
+          linear-gradient(rgba(10, 37, 53, 0.7), rgba(26, 64, 90, 0.7)),
+          url("https://financewithajay.co/wp-content/uploads/2026/07/SIP.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2.5rem 2rem;
+        position: relative;
+        min-height: 420px;
+        overflow: hidden;
+      }
+      .con-image-side::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -30%;
+        width: 300px;
+        height: 300px;
+        background: rgba(143, 201, 230, 0.06);
+        border-radius: 50%;
+        pointer-events: none;
+      }
+      .con-image-side .con-illustration {
+        max-width: 100%;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.9);
+        position: relative;
+        z-index: 1;
+      }
+      .con-image-side .con-illustration i {
+        font-size: 6rem;
+        color: #8fc9e6;
+        margin-bottom: 1.2rem;
+        display: block;
+        opacity: 0.95;
+        filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.3));
+        animation: conFloat 3s ease-in-out infinite;
+      }
+      @keyframes conFloat {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
+      }
+      .con-image-side .con-illustration h2 {
+        font-weight: 400;
+        font-size: 2.2rem;
+        letter-spacing: -0.02em;
+        color: white;
+        line-height: 1.2;
+        text-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+      }
+      .con-image-side .con-illustration h2 strong {
+        font-weight: 600;
+        color: #a8d4f0;
+      }
+      .con-image-side .con-illustration p {
+        color: #b6d2e6;
+        margin-top: 0.6rem;
+        font-size: 1rem;
+        opacity: 0.9;
+        letter-spacing: 0.3px;
+      }
+      .con-badge {
+        position: absolute;
+        bottom: 30px;
+        left: 30px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(6px);
+        padding: 0.5rem 1.4rem;
+        border-radius: 60px;
+        color: #cfe2f0;
+        font-size: 0.75rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        letter-spacing: 0.5px;
+        z-index: 1;
+      }
+      .con-badge i {
+        color: #7fc1e0;
+      }
+
+      /* ----- right form side ----- */
+      .con-form-side {
+        padding: 2.8rem 2.5rem;
+        background: #fafcff;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+      }
+      .con-form-side::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #1f6f9b, #5fa3c9, #1f6f9b);
+        background-size: 200% 100%;
+        animation: conGradient 3s ease infinite;
+      }
+      @keyframes conGradient {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+      .con-form-side h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #0a2535;
+        margin-bottom: 0.2rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .con-form-side h3 i {
+        color: #1f6f9b;
+        font-size: 1.6rem;
+        background: #e8f0f8;
+        padding: 8px;
+        border-radius: 12px;
+      }
+      .con-sub {
+        color: #3f627c;
+        margin-bottom: 2rem;
+        border-left: 4px solid #1f6f9b;
+        padding-left: 1rem;
+        font-weight: 400;
+        font-size: 0.95rem;
+        background: #f0f6fc;
+        padding: 0.6rem 1rem;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .con-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        margin-bottom: 1.2rem;
+      }
+      .con-group label {
+        font-weight: 600;
+        font-size: 17px;
+        color: #1a3f57;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        letter-spacing: 0.3px;
+      }
+      .con-group label i {
+        color: #2b7a9c;
+        width: 20px;
+        font-size: 0.95rem;
+      }
+      .con-group input,
+      .con-group select {
+        padding: 13px 20px;
+        border: 2px solid #e4ecf5;
+        border-radius: 60px;
+        font-size: 0.95rem;
+        background: white;
+        transition: 0.25s ease;
+        outline: none;
+        width: 92%;
+        font-weight: 500;
+        color: #1a2f3f;
+      }
+      .con-group input::placeholder {
+        color: #a0b8cc;
+        font-weight: 400;
+      }
+      .con-group input:focus,
+      .con-group select:focus {
+        border-color: #1e6f9f;
+        box-shadow: 0 0 0 5px rgba(30, 111, 159, 0.12);
+        background: #ffffff;
+      }
+      .con-group select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%231f6f9b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 18px center;
+        padding-right: 44px;
+        cursor: pointer;
+        width: 99%;
+      }
+
+      .con-btn-submit {
+        background: linear-gradient(135deg, #0f2d40 0%, #1a405a 100%);
+        border: none;
+        padding: 16px 28px;
+        border-radius: 60px;
+        color: white;
+        font-weight: 700;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 0.8rem;
+        box-shadow: 0 8px 24px rgba(15, 45, 64, 0.25);
+        width: 100%;
+        letter-spacing: 0.5px;
+        position: relative;
+        overflow: hidden;
+      }
+      .con-btn-submit::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 60%
+        );
+        opacity: 0;
+        transition: 0.5s;
+      }
+      .con-btn-submit:hover::after {
+        opacity: 1;
+      }
+      .con-btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 32px rgba(15, 45, 64, 0.35);
+      }
+      .con-btn-submit:active {
+        transform: scale(0.98);
+      }
+      .con-btn-submit i {
+        font-size: 1.1rem;
+      }
+
+      /* ===== POPUP (con- prefix) ===== */
+      .con-popup-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 20, 30, 0.7);
+        backdrop-filter: blur(10px);
+        align-items: center;
+        justify-content: center;
+        z-index: 999;
+        padding: 1.5rem;
+        animation: conFadeIn 0.3s ease;
+      }
+      .con-popup-overlay.con-active {
+        display: flex;
+      }
+      .con-popup-card {
+        background: white;
+        max-width: 980px; /* wider popup */
+        height: 580px;
+        width: 100%;
+        border-radius: 18px;
+        box-shadow: 0 50px 90px -20px rgba(0, 0, 0, 0.6);
+        position: relative;
+        animation: conSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        max-height: 92vh;
+        overflow-y: auto;
+        padding: 2rem 2.5rem 2rem;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fbfe 100%);
+      }
+      .con-popup-card::-webkit-scrollbar {
+        width: 6px;
+      }
+      .con-popup-card::-webkit-scrollbar-track {
+        background: #eef4f9;
+        border-radius: 10px;
+      }
+      .con-popup-card::-webkit-scrollbar-thumb {
+        background: #8fc9e6;
+        border-radius: 10px;
+      }
+      .con-popup-close {
+        position: absolute;
+        top: 18px;
+        right: 22px;
+        background: #f1f5f9;
+        border: none;
+        width: 44px;
+        height: 44px;
+        border-radius: 40px;
+        font-size: 1.4rem;
+        color: #1f3b4e;
+        cursor: pointer;
+        transition: 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      }
+      .con-popup-close:hover {
+        background: #e2eaf2;
+        transform: rotate(90deg) scale(1.05);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      }
+      .con-popup-title {
+        font-size: 1.9rem;
+        font-weight: 700;
+        color: #0a2535;
+        margin-bottom: 0.2rem;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .con-popup-title i {
+        color: #1f6f9b;
+        background: #e8f0f8;
+        padding: 10px;
+        border-radius: 14px;
+        font-size: 1.4rem;
+      }
+      .con-popup-sub {
+        color: #3e5f79;
+        margin-bottom: 1.6rem;
+        border-bottom: 2px solid #e9edf2;
+        padding-bottom: 0.8rem;
+        font-size: 0.95rem;
+        font-weight: 500;
+        padding-left: 4px;
+      }
+      .con-popup-sub i {
+        color: #1f6f9b;
+        margin-right: 6px;
+      }
+
+      .con-two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem 1.2rem;
+      }
+      .con-field {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+      .con-field label {
+        font-weight: 600;
+        font-size: 14.5px;
+        color: #1f4059;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        letter-spacing: 0.2px;
+      }
+      .con-field label i {
+        color: #2b7a9c;
+        width: 18px;
+        font-size: 0.85rem;
+      }
+      .con-field input,
+      .con-field select,
+      .con-field textarea {
+        padding: 11px 16px;
+        border: 2px solid #e1e1e1;
+        border-radius: 30px;
+        font-size: 14px;
+        background: #f4faff;
+        transition: 0.25s ease;
+        outline: none;
+        width: 93%;
+        font-weight: 500;
+        color: #192b39;
+      }
+      .con-field input::placeholder,
+      .con-field textarea::placeholder {
+        color: #a0b8cc;
+        font-weight: 400;
+      }
+      .con-field input:focus,
+      .con-field select:focus,
+      .con-field textarea:focus {
+        border-color: #1e6f9f;
+        box-shadow: 0 0 0 4px rgba(30, 111, 159, 0.12);
+        background: white;
+      }
+      .con-field textarea {
+        border-radius: 20px;
+        resize: vertical;
+        min-height: 50px;
+      }
+      .con-full-width {
+        grid-column: 1 / -1;
+      }
+      .con-checkbox-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+        padding-top: 4px;
+        background: #f5f9fe;
+        padding: 10px 14px;
+        border-radius: 16px;
+        border: 1px solid #e4ecf5;
+      }
+      .con-checkbox-group label {
+        font-weight: 500;
+        font-size: 0.88rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+        color: #1a3f57;
+        padding: 2px 6px;
+        border-radius: 6px;
+        transition: 0.2s;
+      }
+      .con-checkbox-group label:hover {
+        background: rgba(30, 111, 159, 0.06);
+      }
+      .con-checkbox-group input[type="checkbox"] {
+        width: 17px;
+        height: 17px;
+        accent-color: #1f6f9b;
+        cursor: pointer;
+      }
+
+      .con-partner-logos {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+        align-items: center;
+        margin: 0.6rem 0 0.2rem;
+        padding: 0.6rem 0.2rem;
+        border-top: 2px dashed #cbd7e3;
+      }
+      .con-partner-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 18px 6px 12px;
+        border-radius: 50px;
+        border: 1px solid #dde6ef;
+        font-weight: 600;
+        color: #12344a;
+        font-size: 0.8rem;
+        background: white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        transition: 0.2s;
+      }
+      .con-partner-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      }
+      .con-partner-item i {
+        font-size: 1rem;
+        color: #1c5e84;
+      }
+      .con-popup-action {
+        margin-top: 1.8rem;
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+      }
+      .con-btn-primary {
+        background: linear-gradient(135deg, #0a2a3f 0%, #1a4a6a 100%);
+        border: none;
+        padding: 15px 44px;
+        border-radius: 60px;
+        color: white;
+        font-weight: 700;
+        font-size: 1rem;
+        box-shadow: 0 8px 24px rgba(10, 42, 63, 0.3);
+        cursor: pointer;
+        transition: 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        letter-spacing: 0.5px;
+      }
+      .con-btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 32px rgba(10, 42, 63, 0.4);
+      }
+      .con-btn-primary:active {
+        transform: scale(0.97);
+      }
+      .con-btn-primary.con-loading {
+        opacity: 0.7;
+        pointer-events: none;
+      }
+
+      .con-toast {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #0a2a3f;
+        color: white;
+        padding: 18px 28px;
+        border-radius: 16px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+        z-index: 9999;
+        transform: translateY(100px);
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        max-width: 440px;
+        font-weight: 500;
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .con-toast.con-show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      .con-toast.con-success {
+        background: linear-gradient(135deg, #0a6b3f, #0d8a52);
+      }
+      .con-toast.con-error {
+        background: linear-gradient(135deg, #7a1a1a, #a52828);
+      }
+      .con-toast i {
+        font-size: 1.4rem;
+      }
+
+      .con-small-note {
+        font-size: 0.7rem;
+        color: #5d7e98;
+        margin-top: 4px;
+        opacity: 0.7;
+      }
+
+      /* animations */
+      @keyframes conFadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes conSlideUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px) scale(0.96);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      /* responsive */
+      @media (max-width: 900px) {
+        .con-body {
+          padding: 1rem 1rem;
+        }
+        .con-card {
+          grid-template-columns: 1fr;
+          border-radius: 32px;
+        }
+        .con-image-side {
+          min-height: 220px;
+          padding: 2rem 1.5rem;
+        }
+        .con-image-side .con-illustration i {
+          font-size: 3.5rem;
+        }
+        .con-image-side .con-illustration h2 {
+          font-size: 1.6rem;
+        }
+        .con-popup-card {
+          padding: 1.5rem;
+          border-radius: 32px;
+        }
+        .con-two-col {
+          grid-template-columns: 1fr;
+        }
+        .con-popup-action {
+          justify-content: center;
+        }
+        .con-btn-primary {
+          width: 100%;
+          justify-content: center;
+        }
+        .con-toast {
+          bottom: 20px;
+          right: 20px;
+          left: 20px;
+          max-width: none;
+          padding: 14px 20px;
+          font-size: 0.9rem;
+        }
+      }
+      @media (max-width: 500px) {
+        .con-body {
+          padding: 1rem 1rem;
+        }
+        .con-popup-card {
+          padding: 1rem;
+          border-radius: 24px;
+          height: auto;
+        }
+        .con-form-side {
+          padding: 1.5rem;
+        }
+        .con-form-side h3 {
+          font-size: 1.4rem;
+        }
+        .con-group input,
+        .con-group select {
+          padding: 11px 16px;
+          font-size: 0.9rem;
+        }
+        .con-btn-submit {
+          padding: 14px 20px;
+          font-size: 0.9rem;
+        }
+        .con-popup-title {
+          font-size: 1.4rem;
+        }
+        .con-popup-title i {
+          padding: 8px;
+          font-size: 1.1rem;
+        }
+        .con-field input,
+        .con-field select,
+        .con-field textarea {
+          padding: 10px 14px;
+          font-size: 0.88rem;
+        }
+      }
+
+      /* extra safety for elementor */
+      .elementor-widget-html .con-body {
+        padding: 0.5rem 0.2rem;
+      }
+      .elementor-widget-html .con-card {
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="con-body">
+      <div class="con-card">
+        <!-- left side: image -->
+        <div class="con-image-side">
+          <div class="con-illustration">
+            <i class="fas fa-hand-holding-usd"></i>
+            <h2>Finance <br /><strong>Solutions</strong></h2>
+            <p>Professional support for life, health, protection & more</p>
+          </div>
+          <div class="con-badge">
+            <i class="fas fa-shield-alt" style="margin-right: 6px"></i> 100%
+            secure
+          </div>
+        </div>
+
+        <!-- right side: contact form -->
+        <div class="con-form-side">
+          <h3><i class="fas fa-envelope"></i> Contact us</h3>
+          <div class="con-sub">
+            <i
+              class="fas fa-arrow-right"
+              style="margin-right: 8px; color: #1f6f9b"
+            ></i>
+            Fill in your details & choose a service
+          </div>
+          <form id="conContactForm" novalidate>
+            <div class="con-group">
+              <label><i class="fas fa-user"></i> Full name</label>
+              <input
+                type="text"
+                id="conFullName"
+                placeholder="e.g. Ananya Sharma"
+                required
+              />
+            </div>
+            <div class="con-group">
+              <label><i class="fas fa-envelope"></i> Email address</label>
+              <input
+                type="email"
+                id="conEmail"
+                placeholder="you@example.com"
+                required
+              />
+            </div>
+            <div class="con-group">
+              <label><i class="fas fa-phone-alt"></i> Phone number</label>
+              <input
+                type="tel"
+                id="conPhone"
+                placeholder="+91 98765 43210"
+                required
+              />
+            </div>
+            <div class="con-group">
+              <label
+                ><i class="fas fa-briefcase"></i> Service of interest</label
+              >
+              <select id="conServiceSelect">
+                <option value="">— Please select —</option>
+                <option value="medical">Medical Insurance</option>
+                <option value="car">Car & Travel Insurance</option>
+                <option value="travel">Travel Insurance</option>
+                <option value="guaranteed">Guaranteed Plans</option>
+                <option value="mutual">Mutual Funds</option>
+                <option value="ulip">ULIPs</option>
+                <option value="life">Life Insurance</option>
+                <option value="homeloan">Home Loans (Above ₹1 Cr)</option>
+                <option value="factory">Factory & Group Insurance</option>
+                <option value="expertise">Expertise</option>
+                <option value="companies">Medical Insurance Companies</option>
+              </select>
+            </div>
+            <button type="button" class="con-btn-submit" id="conOpenPopupBtn">
+              Get Information
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- ===== POPUP ===== -->
+      <div class="con-popup-overlay" id="conPopupOverlay">
+        <div class="con-popup-card" id="conPopupCard">
+          <button class="con-popup-close" id="conPopupClose">
+            <i class="fas fa-times"></i>
+          </button>
+          <div class="con-popup-title">
+            <i class="fas fa-circle-info" id="conPopupIcon"></i>
+            <span id="conServiceName">Service</span>
+          </div>
+          <div class="con-popup-sub" id="conPopupSub">
+            <i class="fas fa-pen-fancy"></i> Tell us more about your
+            requirements
+          </div>
+
+          <!-- Common fields (2‑col) -->
+          <div id="conCommonQuestions" style="margin-bottom: 0.8rem">
+            <div class="con-two-col">
+              <div class="con-field">
+                <label><i class="fas fa-user"></i> Full Name *</label>
+                <input type="text" id="conCommonName" placeholder="Full name" />
+              </div>
+              <div class="con-field">
+                <label><i class="fas fa-phone"></i> Mobile *</label>
+                <input type="tel" id="conCommonMobile" placeholder="Mobile" />
+              </div>
+              <div class="con-field">
+                <label><i class="fas fa-envelope"></i> Email *</label>
+                <input type="email" id="conCommonEmail" placeholder="Email" />
+              </div>
+              <div class="con-field">
+                <label><i class="fas fa-city"></i> Current City *</label>
+                <input type="text" id="conCommonCity" placeholder="City" />
+              </div>
+              <div class="con-field">
+                <label><i class="fas fa-map-pin"></i> State *</label>
+                <input type="text" id="conCommonState" placeholder="State" />
+              </div>
+              <div class="con-field">
+                <label
+                  ><i class="fas fa-clock"></i> Preferred Contact Time</label
+                >
+                <input
+                  type="text"
+                  id="conCommonTime"
+                  placeholder="e.g. 10am-12pm"
+                />
+              </div>
+              <div class="con-field con-full-width">
+                <label><i class="fas fa-briefcase"></i> Service Required</label>
+                <select id="conCommonServiceDropdown">
+                  <option value="medical">Medical Insurance</option>
+                  <option value="car">Car & Travel</option>
+                  <option value="travel">Travel Insurance</option>
+                  <option value="guaranteed">Guaranteed Plans</option>
+                  <option value="mutual">Mutual Funds</option>
+                  <option value="ulip">ULIPs</option>
+                  <option value="life">Life Insurance</option>
+                  <option value="homeloan">Home Loans</option>
+                  <option value="factory">Factory Insurance</option>
+                  <option value="group">Group Insurance</option>
+                  <option value="expertise">Expertise</option>
+                </select>
+              </div>
+              <div class="con-field con-full-width">
+                <label
+                  ><i class="fas fa-pencil-alt"></i> Additional
+                  Requirements</label
+                >
+                <textarea
+                  id="conCommonAdditional"
+                  rows="2"
+                  placeholder="Any special request..."
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- service-specific questions container -->
+          <div
+            id="conQuestionsContainer"
+            class="con-two-col"
+            style="border-top: 2px solid #e9edf2; padding-top: 0.8rem"
+          ></div>
+
+          <!-- partner logos (visible for Life Insurance) -->
+          <div id="conPartnerLogosContainer" style="display: none">
+            <div class="con-partner-logos" id="conPartnerLogos">
+              <div class="con-partner-item">
+                <i class="fas fa-building"></i> Tata Life
+              </div>
+              <div class="con-partner-item">
+                <i class="fas fa-building"></i> Bajaj
+              </div>
+              <div class="con-partner-item">
+                <i class="fas fa-building"></i> MAX
+              </div>
+              <div class="con-partner-item">
+                <i class="fas fa-building"></i> HDFC Life
+              </div>
+            </div>
+            <div
+              style="
+                font-size: 0.7rem;
+                color: #3f627d;
+                opacity: 0.7;
+                padding-left: 4px;
+                margin-top: 2px;
+              "
+            >
+              <i class="fas fa-handshake"></i> Partner insurers
+            </div>
+          </div>
+
+          <div class="con-popup-action">
+            <button class="con-btn-primary" id="conSubmitPopupBtn">
+              <i class="fas fa-paper-plane"></i> Submit inquiry
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toast -->
+      <div class="con-toast" id="conToast"></div>
+    </section>
+
+    <script>
+      (function () {
+        // ===== CONFIG =====
+        const WEBHOOK_URL =
+          "https://script.google.com/macros/s/AKfycbwDuREVOduNSdano4UYKm7w1yPTj5tG8K4_46CuN5A-Sfur_lMLXJfaQ8ohHaBj5lFSXg/exec";
+
+        // ===== SERVICE DATA =====
+        const serviceData = {
+          medical: {
+            label: "Medical Insurance",
+            questions: [
+              {
+                type: "select",
+                label: "Gender",
+                options: ["Male", "Female", "Other"],
+              },
+              { type: "date", label: "Date of Birth" },
+              { type: "text", label: "Marital Status" },
+              { type: "text", label: "Occupation" },
+              {
+                type: "select",
+                label: "Annual Income",
+                options: [
+                  "Below ₹3L",
+                  "₹3-5L",
+                  "₹5-10L",
+                  "₹10-20L",
+                  "₹20-50L",
+                  "₹50L-1Cr",
+                  "Above 1Cr",
+                ],
+              },
+              { type: "text", label: "Height (cm)" },
+              { type: "text", label: "Weight (kg)" },
+              {
+                type: "select",
+                label: "Smoke or chew tobacco?",
+                options: ["Yes", "No"],
+              },
+              {
+                type: "select",
+                label: "Existing medical conditions?",
+                options: ["Yes", "No"],
+              },
+              {
+                type: "select",
+                label: "Any previous surgeries?",
+                options: ["Yes", "No"],
+              },
+              { type: "text", label: "Current medications (optional)" },
+              { type: "text", label: "Number of family members" },
+              {
+                type: "select",
+                label: "Individual / Family Floater",
+                options: ["Individual", "Family Floater"],
+              },
+              {
+                type: "select",
+                label: "Existing Health Insurance?",
+                options: ["Yes", "No"],
+              },
+              {
+                type: "select",
+                label: "Sum Insured Required",
+                options: ["₹5L", "₹10L", "₹20L", "₹50L", "₹1Cr+"],
+              },
+              {
+                type: "select",
+                label: "Preferred Company",
+                options: [
+                  "Niva Bupa",
+                  "HDFC ERGO",
+                  "Care Health",
+                  "Star Health",
+                  "ICICI Lombard",
+                  "Tata AIG",
+                  "No Preference",
+                ],
+              },
+            ],
+          },
+          car: {
+            label: "Car Insurance",
+            questions: [
+              { type: "text", label: "Car Registration Number" },
+              { type: "text", label: "Manufacturer" },
+              { type: "text", label: "Model" },
+              { type: "text", label: "Variant" },
+              { type: "text", label: "Manufacturing Year" },
+              {
+                type: "select",
+                label: "Fuel Type",
+                options: ["Petrol", "Diesel", "CNG", "Electric"],
+              },
+              {
+                type: "select",
+                label: "Existing Policy?",
+                options: ["Yes", "No"],
+              },
+              { type: "date", label: "Policy Expiry Date" },
+              {
+                type: "select",
+                label: "Claim Made Last Year?",
+                options: ["Yes", "No"],
+              },
+              {
+                type: "select",
+                label: "Insurance Type",
+                options: ["Third Party", "Comprehensive"],
+              },
+              {
+                type: "select",
+                label: "Preferred Company",
+                options: [
+                  "HDFC ERGO",
+                  "ICICI Lombard",
+                  "Tata AIG",
+                  "Bajaj Allianz",
+                  "Reliance General",
+                  "No Preference",
+                ],
+              },
+            ],
+          },
+          travel: {
+            label: "Travel Insurance",
+            questions: [
+              { type: "text", label: "Destination Country" },
+              { type: "text", label: "Number of Travellers" },
+              { type: "date", label: "Departure Date" },
+              { type: "date", label: "Return Date" },
+              { type: "date", label: "Date of Birth (traveller)" },
+              {
+                type: "text",
+                label: "Age (auto-calc)",
+                placeholder: "will be calculated",
+              },
+              {
+                type: "select",
+                label: "Passport Available?",
+                options: ["Yes", "No"],
+              },
+              {
+                type: "select",
+                label: "Travel Purpose",
+                options: ["Tourism", "Business", "Student", "Family Visit"],
+              },
+              {
+                type: "select",
+                label: "Coverage Required",
+                options: [
+                  "Medical Only",
+                  "Trip Cancellation",
+                  "Baggage Protection",
+                  "Comprehensive",
+                ],
+              },
+              {
+                type: "select",
+                label: "Preferred Company",
+                options: [
+                  "Tata AIG",
+                  "HDFC ERGO",
+                  "ICICI Lombard",
+                  "Reliance",
+                  "No Preference",
+                ],
+              },
+            ],
+          },
+          guaranteed: {
+            label: "Guaranteed Income / Savings",
+            questions: [
+              {
+                type: "select",
+                label: "Gender",
+                options: ["Male", "Female", "Other"],
+              },
+              { type: "date", label: "Date of Birth" },
+              { type: "text", label: "Occupation" },
+              {
+                type: "select",
+                label: "Annual Income",
+                options: [
+                  "Below ₹3L",
+                  "₹3-5L",
+                  "₹5-10L",
+                  "₹10-20L",
+                  "₹20-50L",
+                  "₹50L-1Cr",
+                  "Above 1Cr",
+                ],
+              },
+              { type: "text", label: "Current City" },
+              {
+                type: "select",
+                label: "Investment Amount",
+                options: [
+                  "₹25,000",
+                  "₹50,000",
+                  "₹1 Lakh",
+                  "₹2 Lakhs",
+                  "₹5 Lakhs+",
+                ],
+              },
+              {
+                type: "select",
+                label: "Goal",
+                options: [
+                  "Regular Income",
+                  "Child Education",
+                  "Retirement",
+                  "Wealth Creation",
+                ],
+              },
+              {
+                type: "select",
+                label: "Investment Duration",
+                options: ["5 Years", "10 Years", "15 Years", "20+ Years"],
+              },
+              {
+                type: "select",
+                label: "Preferred Company",
+                options: [
+                  "Tata AIA",
+                  "Bajaj Allianz",
+                  "Max Life",
+                  "HDFC Life",
+                  "ICICI Prudential",
+                  "No Preference",
+                ],
+              },
+            ],
+          },
+          mutual: {
+            label: "Mutual Funds",
+            questions: [
+              { type: "text", label: "Age" },
+              { type: "text", label: "Occupation" },
+              {
+                type: "select",
+                label: "Annual Income",
+                options: [
+                  "Below ₹3L",
+                  "₹3-5L",
+                  "₹5-10L",
+                  "₹10-20L",
+                  "₹20-50L",
+                  "₹50L-1Cr",
+                  "Above 1Cr",
+                ],
+              },
+              {
+                type: "select",
+                label: "Investment Type",
+                options: ["Monthly SIP", "One-Time Investment"],
+              },
+              {
+                type: "select",
+                label: "Investment Amount",
+                options: [
+                  "₹500–₹2,000",
+                  "₹2,000–₹5,000",
+                  "₹5,000–₹10,000",
+                  "₹10,000–₹25,000",
+                  "₹25,000+",
+                ],
+              },
+              {
+                type: "select",
+                label: "Investment Goal",
+                options: [
+                  "Tax Saving",
+                  "Wealth Creation",
+                  "Retirement",
+                  "Child Education",
+                  "House Purchase",
+                ],
+              },
+              {
+                type: "select",
+                label: "Risk Appetite",
+                options: ["Low", "Moderate", "High"],
+              },
+              {
+                type: "select",
+                label: "Existing Mutual Fund Investor?",
+                options: ["Yes", "No"],
+              },
+            ],
+          },
+          ulip: {
+            label: "ULIPs",
+            questions: [
+              {
+                type: "select",
+                label: "Gender",
+                options: ["Male", "Female", "Other"],
+              },
+              { type: "date", label: "Date of Birth" },
+              { type: "text", label: "Occupation" },
+              {
+                type: "select",
+                label: "Annual Income",
+                options: [
+                  "Below ₹3L",
+                  "₹3-5L",
+                  "₹5-10L",
+                  "₹10-20L",
+                  "₹20-50L",
+                  "₹50L-1Cr",
+                  "Above 1Cr",
+                ],
+              },
+              { type: "text", label: "Current City" },
+              { type: "text", label: "Premium Amount (₹)" },
+              { type: "text", label: "Investment Horizon (years)" },
+              {
+                type: "select",
+                label: "Risk Appetite",
+                options: ["Low", "Moderate", "High"],
+              },
+              {
+                type: "select",
+                label: "Goal",
+                options: [
+                  "Wealth Creation",
+                  "Child Education",
+                  "Retirement",
+                  "Insurance + Investment",
+                ],
+              },
+              {
+                type: "select",
+                label: "Preferred Company",
+                options: [
+                  "Tata AIA",
+                  "Bajaj Allianz",
+                  "Max Life",
+                  "HDFC Life",
+                  "ICICI Prudential",
+                  "No Preference",
+                ],
+              },
+            ],
+          },
+          life: {
+            label: "Life Insurance",
+            questions: [
+              {
+                type: "select",
+                label: "Gender",
+                options: ["Male", "Female", "Other"],
+              },
+              { type: "date", label: "Date of Birth" },
+              { type: "text", label: "Occupation" },
+              {
+                type: "select",
+                label: "Annual Income",
+                options: ["Below ₹5L", "₹5–10L", "₹10–20L", "₹20–50L", "₹50L+"],
+              },
+              {
+                type: "select",
+                label: "Smoke or chew tobacco?",
+                options: ["Yes", "No"],
+              },
+              {
+                type: "select",
+                label: "Required Cover Amount",
+                options: [
+                  "₹25 Lakh",
+                  "₹50 Lakh",
+                  "₹1 Crore",
+                  "₹2 Crore",
+                  "₹5 Crore+",
+                ],
+              },
+              {
+                type: "select",
+                label: "Existing Life Insurance?",
+                options: ["Yes", "No"],
+              },
+              { type: "text", label: "Current City" },
+              {
+                type: "select",
+                label: "Preferred Company",
+                options: [
+                  "Tata AIA",
+                  "Bajaj Allianz Life",
+                  "Max Life",
+                  "HDFC Life",
+                  "ICICI Prudential",
+                  "SBI Life",
+                  "No Preference",
+                ],
+              },
+            ],
+            showPartners: true,
+          },
+          homeloan: {
+            label: "Home Loans (₹1Cr+)",
+            questions: [
+              {
+                type: "select",
+                label: "Employment Type",
+                options: ["Salaried", "Self-Employed", "Business Owner"],
+              },
+              {
+                type: "select",
+                label: "Monthly Income",
+                options: ["₹1L–2L", "₹2L–5L", "₹5L–10L", "₹10L+"],
+              },
+              { type: "text", label: "Loan Amount (₹)" },
+              { type: "text", label: "Property Value (₹)" },
+              { type: "text", label: "Property Location" },
+              { type: "text", label: "Property Type" },
+              {
+                type: "select",
+                label: "Existing Loans?",
+                options: ["Yes", "No"],
+              },
+              {
+                type: "select",
+                label: "Credit Score (Optional)",
+                options: ["750+", "700–750", "Below 700", "Don't Know"],
+              },
+            ],
+          },
+          factory: {
+            label: "Factory Insurance",
+            questions: [
+              { type: "text", label: "Company Name" },
+              { type: "text", label: "Industry Type" },
+              { type: "text", label: "Factory Location" },
+              {
+                type: "select",
+                label: "Coverage Required",
+                options: [
+                  "Building",
+                  "Machinery",
+                  "Stock",
+                  "Fire",
+                  "Liability",
+                  "All Risks",
+                ],
+              },
+              {
+                type: "select",
+                label: "Annual Turnover",
+                options: [
+                  "Below ₹1 Cr",
+                  "₹1–5 Cr",
+                  "₹5–10 Cr",
+                  "₹10–50 Cr",
+                  "₹50 Cr+",
+                ],
+              },
+              { type: "text", label: "Number of Employees" },
+              {
+                type: "select",
+                label: "Existing Insurance?",
+                options: ["Yes", "No"],
+              },
+            ],
+          },
+          group: {
+            label: "Group Insurance",
+            questions: [
+              { type: "text", label: "Company Name" },
+              { type: "text", label: "Industry" },
+              {
+                type: "select",
+                label: "Number of Employees",
+                options: ["10–25", "25–50", "50–100", "100–250", "250+"],
+              },
+              {
+                type: "select",
+                label: "Coverage Required",
+                options: [
+                  "Group Health",
+                  "Group Term Life",
+                  "Personal Accident",
+                  "Employee Benefits",
+                ],
+              },
+              {
+                type: "select",
+                label: "Existing Policy?",
+                options: ["Yes", "No"],
+              },
+              { type: "date", label: "Renewal Date" },
+            ],
+          },
+          expertise: {
+            label: "Expertise / Consultation",
+            questions: [
+              {
+                type: "checkbox",
+                label: "What do you need help with?",
+                options: [
+                  "Insurance Planning",
+                  "Investment Planning",
+                  "Retirement Planning",
+                  "Tax Saving",
+                  "Wealth Management",
+                  "Business Insurance",
+                  "Home Loan",
+                  "Financial Goal Planning",
+                ],
+              },
+              {
+                type: "select",
+                label: "Preferred Mode",
+                options: ["Phone Call", "Video Meeting", "Office Visit"],
+              },
+              {
+                type: "select",
+                label: "Best Time to Contact",
+                options: ["Morning", "Afternoon", "Evening"],
+              },
+            ],
+          },
+          companies: {
+            label: "Medical Insurance Companies",
+            questions: [
+              {
+                type: "select",
+                label: "Company",
+                options: [
+                  "Star Health",
+                  "HDFC Ergo",
+                  "ICICI Lombard",
+                  "Bajaj Allianz",
+                  "Tata AIG",
+                  "Other",
+                ],
+              },
+              { type: "text", label: "Policy number (optional)" },
+            ],
+          },
+        };
+
+        // ===== DOM REFS =====
+        const serviceSelect = document.getElementById("conServiceSelect");
+        const openPopupBtn = document.getElementById("conOpenPopupBtn");
+        const overlay = document.getElementById("conPopupOverlay");
+        const closeBtn = document.getElementById("conPopupClose");
+        const serviceNameSpan = document.getElementById("conServiceName");
+        const questionsContainer = document.getElementById(
+          "conQuestionsContainer",
+        );
+        const partnerContainer = document.getElementById(
+          "conPartnerLogosContainer",
+        );
+        const submitPopupBtn = document.getElementById("conSubmitPopupBtn");
+        const popupIcon = document.getElementById("conPopupIcon");
+        const toast = document.getElementById("conToast");
+
+        const commonName = document.getElementById("conCommonName");
+        const commonMobile = document.getElementById("conCommonMobile");
+        const commonEmail = document.getElementById("conCommonEmail");
+        const commonCity = document.getElementById("conCommonCity");
+        const commonState = document.getElementById("conCommonState");
+        const commonTime = document.getElementById("conCommonTime");
+        const commonServiceDropdown = document.getElementById(
+          "conCommonServiceDropdown",
+        );
+        const commonAdditional = document.getElementById("conCommonAdditional");
+
+        const fullName = document.getElementById("conFullName");
+        const email = document.getElementById("conEmail");
+        const phone = document.getElementById("conPhone");
+
+        let currentServiceKey = "";
+        let toastTimeout = null;
+
+        // ===== TOAST =====
+        function showToast(message, type = "success") {
+          if (toastTimeout) {
+            clearTimeout(toastTimeout);
+            toast.classList.remove("con-show");
+          }
+          toast.innerHTML = `<i class="fas ${type === "success" ? "fa-check-circle" : "fa-exclamation-circle"}"></i> ${message}`;
+          toast.className = `con-toast ${type === "success" ? "con-success" : "con-error"}`;
+          void toast.offsetWidth;
+          toast.classList.add("con-show");
+          toastTimeout = setTimeout(() => {
+            toast.classList.remove("con-show");
+            toastTimeout = null;
+          }, 4500);
+        }
+
+        function resetContactForm() {
+          fullName.value = "";
+          email.value = "";
+          phone.value = "";
+          serviceSelect.value = "";
+        }
+
+        // ===== OPEN POPUP =====
+        function openPopup(serviceKey) {
+          const data = serviceData[serviceKey];
+          if (!data) {
+            showToast("Please select a valid service.", "error");
+            return;
+          }
+          currentServiceKey = serviceKey;
+          serviceNameSpan.textContent = data.label;
+
+          const iconMap = {
+            life: "fa-hand-holding-heart",
+            medical: "fa-heartbeat",
+            car: "fa-car",
+            travel: "fa-plane",
+            guaranteed: "fa-shield-alt",
+            mutual: "fa-chart-line",
+            ulip: "fa-coins",
+            homeloan: "fa-home",
+            factory: "fa-industry",
+            expertise: "fa-user-tie",
+            companies: "fa-building",
+            group: "fa-users",
+          };
+          popupIcon.className = `fas ${iconMap[serviceKey] || "fa-circle-info"}`;
+
+          let html = "";
+          if (data.questions && data.questions.length) {
+            data.questions.forEach((q) => {
+              const id = `con_q_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`;
+              if (q.type === "checkbox") {
+                html += `<div class="con-field con-full-width"><label><i class="fas fa-check-circle"></i> ${q.label}</label><div class="con-checkbox-group">`;
+                q.options.forEach((opt) => {
+                  html += `<label><input type="checkbox" value="${opt}" /> ${opt}</label>`;
+                });
+                html += `</div></div>`;
+              } else {
+                html += `<div class="con-field">`;
+                html += `<label for="${id}"><i class="fas fa-chevron-right"></i> ${q.label}</label>`;
+                if (q.type === "select") {
+                  html += `<select id="${id}" name="${q.label}">`;
+                  q.options.forEach(
+                    (opt) => (html += `<option value="${opt}">${opt}</option>`),
+                  );
+                  html += `</select>`;
+                } else if (q.type === "date") {
+                  html += `<input type="date" id="${id}" name="${q.label}" />`;
+                } else {
+                  html += `<input type="text" id="${id}" placeholder="${q.placeholder || "Enter " + q.label}" />`;
+                }
+                html += `</div>`;
+              }
+            });
+          }
+          questionsContainer.innerHTML = html;
+
+          if (data.showPartners) partnerContainer.style.display = "block";
+          else partnerContainer.style.display = "none";
+
+          commonServiceDropdown.value = serviceKey;
+          overlay.classList.add("con-active");
+          document.body.style.overflow = "hidden";
+        }
+
+        function closePopup() {
+          overlay.classList.remove("con-active");
+          document.body.style.overflow = "";
+        }
+
+        // ===== SUBMIT =====
+        async function submitToWebhook(payload) {
+          try {
+            await fetch(WEBHOOK_URL, {
+              method: "POST",
+              mode: "no-cors",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+            return { success: true };
+          } catch (error) {
+            console.error("Webhook error:", error);
+            return { success: false, error: error.message };
+          }
+        }
+
+        async function handleSubmit() {
+          const serviceName = serviceNameSpan.textContent;
+          if (
+            !commonName.value.trim() ||
+            !commonMobile.value.trim() ||
+            !commonEmail.value.trim()
+          ) {
+            showToast("Please fill in Name, Mobile, and Email.", "error");
+            return;
+          }
+
+          const payload = {
+            service: commonServiceDropdown.value,
+            serviceLabel: serviceName,
+            name: commonName.value.trim(),
+            mobile: commonMobile.value.trim(),
+            email: commonEmail.value.trim(),
+            city: commonCity.value.trim(),
+            state: commonState.value.trim(),
+            time: commonTime.value.trim(),
+            additional: commonAdditional.value.trim(),
+            answers: {},
+          };
+
+          const inputs = questionsContainer.querySelectorAll("input, select");
+          inputs.forEach((el) => {
+            if (el.type === "checkbox") {
+              const label =
+                el
+                  .closest(".con-field")
+                  ?.querySelector("label")
+                  ?.innerText?.trim() || "checkbox";
+              if (!payload.answers[label]) payload.answers[label] = [];
+              if (el.checked) payload.answers[label].push(el.value);
+            } else {
+              const labelEl = el.closest(".con-field")?.querySelector("label");
+              const label = labelEl
+                ? labelEl.innerText.trim()
+                : el.name || "field";
+              if (
+                el.type === "date" ||
+                el.type === "text" ||
+                el.tagName === "SELECT"
+              ) {
+                payload.answers[label] = el.value;
+              }
+            }
+          });
+
+          Object.keys(payload.answers).forEach((k) => {
+            if (
+              Array.isArray(payload.answers[k]) &&
+              payload.answers[k].length === 0
+            )
+              delete payload.answers[k];
+            if (payload.answers[k] === "") delete payload.answers[k];
+          });
+
+          submitPopupBtn.classList.add("con-loading");
+          submitPopupBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+
+          try {
+            const result = await submitToWebhook(payload);
+            if (result.success) {
+              showToast(
+                "✅ Inquiry sent successfully! Our team will reach out shortly.",
+                "success",
+              );
+              resetContactForm();
+              closePopup();
+            } else {
+              showToast("❌ Failed to send. Please try again.", "error");
+              console.error("Submission error:", result.error);
+            }
+          } catch (error) {
+            showToast(
+              "❌ Network error. Please check your connection.",
+              "error",
+            );
+            console.error("Submission error:", error);
+          } finally {
+            submitPopupBtn.classList.remove("con-loading");
+            submitPopupBtn.innerHTML =
+              '<i class="fas fa-paper-plane"></i> Submit inquiry';
+          }
+        }
+
+        // ===== EVENT LISTENERS =====
+        openPopupBtn.addEventListener("click", function (e) {
+          const selected = serviceSelect.value;
+          if (!selected) {
+            showToast("Please select a service first.", "error");
+            return;
+          }
+          if (
+            !fullName.value.trim() ||
+            !email.value.trim() ||
+            !phone.value.trim()
+          ) {
+            showToast(
+              "Please fill in your name, email and phone first.",
+              "error",
+            );
+            return;
+          }
+          commonName.value = fullName.value;
+          commonEmail.value = email.value;
+          commonMobile.value = phone.value;
+          openPopup(selected);
+        });
+
+        closeBtn.addEventListener("click", closePopup);
+        overlay.addEventListener("click", function (e) {
+          if (e.target === overlay) closePopup();
+        });
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" && overlay.classList.contains("con-active"))
+            closePopup();
+        });
+
+        submitPopupBtn.addEventListener("click", handleSubmit);
+        serviceSelect.addEventListener("change", function () {
+          if (this.value) commonServiceDropdown.value = this.value;
+        });
+
+        console.log("✅ Finance Consulting form ready (Elementor safe)");
+        console.log("📡 Webhook URL:", WEBHOOK_URL);
+      })();
+    </script>
+  </body>
+</html>
