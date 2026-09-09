@@ -1,0 +1,1420 @@
+<!-- ------header------ -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thakkar Finance Services</title>
+    <link rel="shortcut icon" href="Photos/tranaparent.png" type="image/png" />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome 6 (more reliable CDN) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      /* ----- ROOT (global variables, no override) ----- */
+      :root {
+        --primary: #58d916;
+        --primary-light: #7cff00;
+        --secondary: #2178ca;
+        --secondary-light: #49a6ff;
+
+        --background: #050b18;
+        --background-secondary: #0b1630;
+        --background-tertiary: #071d32;
+
+        --foreground: #ffffff;
+        --muted: #a9b7cc;
+        --dark: #172033;
+        --border: #203a5c;
+
+        --card: #0b1630;
+
+        --gradient-primary: linear-gradient(135deg, #58d916, #7cff00);
+        --gradient-secondary: linear-gradient(135deg, #2178ca, #49a6ff);
+        --gradient-brand: linear-gradient(135deg, #58d916, #2178ca, #49a6ff);
+      }
+
+      /* ----- GLOBAL RESET (scoped inside .tfs-root) ----- */
+      .tfs-root * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family:
+          "Poppins",
+          "Segoe UI",
+          system-ui,
+          -apple-system,
+          sans-serif;
+      }
+
+      .tfs-root {
+        font-family:
+          "Poppins",
+          "Segoe UI",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background: var(--background);
+        color: var(--foreground);
+        line-height: 1.5;
+      }
+
+      /* ============================================
+         TRANSPARENT HEADER – "tfs-" prefix all classes
+         ============================================ */
+      .tfs-navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 48px;
+
+        /* fully transparent default */
+        background: transparent;
+        border-bottom: 1px solid transparent;
+
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1002;
+        box-sizing: border-box;
+
+        transition:
+          background 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          backdrop-filter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          -webkit-backdrop-filter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          border-radius 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          padding 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          margin 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          border-color 0.3s ease;
+      }
+
+      /* scrolled state – round glass effect */
+      .tfs-navbar.tfs-scrolled {
+        background: rgba(5, 11, 24, 0.78);
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.45);
+        border-radius: 28px;
+        width: calc(100% - 48px);
+        height: 4rem;
+
+        margin: 12px 24px;
+        padding: 12px 32px;
+        border-bottom: 1px solid rgba(32, 58, 92, 0.3);
+      }
+
+      .tfs-navbar.tfs-scrolled .tfs-logo img {
+        height: 60px;
+      }
+
+      .tfs-navbar.tfs-scrolled .tfs-nav-links a {
+        color: rgba(255, 255, 255, 0.85);
+      }
+
+      /* ----- LOGO ----- */
+      .tfs-logo img {
+        height: 90px;
+        width: auto;
+        display: block;
+        transition:
+          height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          transform 0.2s;
+        filter: brightness(1.2) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+      }
+      .tfs-logo img:hover {
+        transform: scale(1.02);
+      }
+
+      /* ----- DESKTOP NAV LINKS ----- */
+      .tfs-nav-links {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+      }
+
+      .tfs-nav-links a {
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: 500;
+        font-size: 15px;
+        letter-spacing: 0.3px;
+        transition:
+          color 0.2s,
+          border-bottom 0.2s;
+        padding-bottom: 4px;
+        border-bottom: 2px solid transparent;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        white-space: nowrap;
+      }
+      .tfs-nav-links a:hover {
+        color: #ffffff;
+        border-bottom-color: var(--primary);
+      }
+
+      /* ----- DESKTOP CTA BUTTON ----- */
+      .tfs-btn-nav {
+        background: var(--gradient-primary);
+        color: var(--background);
+        padding: 10px 28px;
+        border-radius: 60px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        box-shadow: 0 8px 24px rgba(88, 217, 22, 0.3);
+        transition:
+          box-shadow 0.25s,
+          transform 0.2s,
+          background 0.2s,
+          padding 0.4s;
+        border: none;
+        white-space: nowrap;
+        margin-left: 8px;
+        cursor: pointer;
+      }
+      .tfs-btn-nav i {
+        font-size: 16px;
+        color: var(--background);
+      }
+      .tfs-btn-nav:hover {
+        box-shadow: 0 12px 32px rgba(88, 217, 22, 0.5);
+        transform: translateY(-2px);
+        background: linear-gradient(135deg, #6ae91e, #8cff2a);
+        color: var(--background);
+      }
+      .tfs-btn-nav:active {
+        transform: scale(0.96);
+      }
+
+      /* ----- HAMBURGER (mobile) ----- */
+      .tfs-menu-toggle {
+        display: none;
+        font-size: 28px;
+        cursor: pointer;
+        color: #ffffff;
+        background: transparent;
+        border: none;
+        padding: 4px 6px;
+        transition: opacity 0.2s;
+        z-index: 1001;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      }
+      .tfs-menu-toggle:hover {
+        opacity: 0.7;
+      }
+
+      /* ----- CLOSE BUTTON (inside slide) ----- */
+      .tfs-close-btn {
+        display: none;
+        position: absolute;
+        top: 18px;
+        right: 22px;
+        font-size: 28px;
+        cursor: pointer;
+        color: var(--foreground);
+        background: transparent;
+        border: none;
+        padding: 4px 8px;
+        transition: transform 0.2s;
+      }
+      .tfs-close-btn:hover {
+        transform: rotate(90deg);
+        color: var(--primary);
+      }
+
+      /* ----- OVERLAY ----- */
+      .tfs-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(5, 11, 24, 0.7);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.3s,
+          visibility 0.3s;
+        z-index: 999;
+      }
+      .tfs-overlay.tfs-active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      /* ----- MOBILE CTA (inside slide) ----- */
+      .tfs-btn-mobile {
+        display: none;
+      }
+
+      /* ============================================
+         RESPONSIVE (< 900px)
+         ============================================ */
+      @media (max-width: 900px) {
+        .tfs-navbar {
+          padding: 14px 24px;
+        }
+        .tfs-menu-toggle {
+          display: block;
+        }
+
+        /* hide desktop CTA inside navbar on mobile */
+        .tfs-navbar .tfs-btn-nav {
+          display: none;
+        }
+
+        /* slide menu */
+        .tfs-nav-links {
+          position: fixed;
+          top: 0;
+          left: -100%;
+          width: 280px;
+          max-width: 80%;
+          height: 100%;
+          background: var(--background-secondary);
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 72px 28px 40px;
+          gap: 18px;
+          transition: left 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
+          z-index: 1000;
+          box-shadow: 6px 0 40px rgba(0, 0, 0, 0.6);
+          overflow-y: auto;
+          border-right: 1px solid var(--border);
+          display: flex;
+        }
+        .tfs-nav-links.tfs-active {
+          left: 0;
+        }
+
+        .tfs-close-btn {
+          display: block;
+        }
+
+        .tfs-nav-links a {
+          font-size: 16px;
+          padding: 8px 0;
+          width: 100%;
+          border-bottom: 1px solid rgba(32, 58, 92, 0.3);
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          color: var(--muted);
+          border-bottom-color: transparent;
+          text-shadow: none;
+        }
+        .tfs-nav-links a i {
+          width: 24px;
+          color: var(--primary);
+          font-size: 18px;
+        }
+        .tfs-nav-links a:hover {
+          color: var(--foreground);
+          border-bottom-color: var(--primary);
+          padding-left: 6px;
+        }
+
+        .tfs-nav-links .tfs-btn-mobile {
+          display: inline-flex;
+          margin-top: 20px;
+          background: var(--gradient-primary);
+          color: var(--background);
+          padding: 12px 28px;
+          border-radius: 60px;
+          text-decoration: none;
+          align-items: center;
+          gap: 12px;
+          font-size: 15px;
+          font-weight: 600;
+          box-shadow: 0 8px 20px rgba(88, 217, 22, 0.3);
+          transition: 0.2s;
+          border: none;
+          width: auto;
+          border-bottom: none !important;
+          letter-spacing: 0.3px;
+          cursor: pointer;
+        }
+        .tfs-nav-links .tfs-btn-mobile i {
+          color: var(--background);
+          font-size: 18px;
+        }
+        .tfs-nav-links .tfs-btn-mobile:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 12px 28px rgba(88, 217, 22, 0.45);
+          padding-left: 28px;
+          background: linear-gradient(135deg, #6ae91e, #8cff2a);
+        }
+
+        /* mobile scrolled state – full width, no round */
+        .tfs-navbar.tfs-scrolled {
+          border-radius: 0;
+          width: 100%;
+          margin: 0;
+          padding: 14px 24px;
+          background: rgba(5, 11, 24, 0.85);
+          backdrop-filter: blur(16px) saturate(180%);
+          -webkit-backdrop-filter: blur(16px) saturate(180%);
+          border-bottom: 1px solid rgba(32, 58, 92, 0.3);
+          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .tfs-navbar.tfs-scrolled .tfs-logo img {
+          height: 44px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .tfs-navbar {
+          padding: 12px 16px;
+        }
+        .tfs-nav-links {
+          width: 260px;
+          padding: 68px 20px 30px;
+        }
+        .tfs-navbar.tfs-scrolled {
+          padding: 12px 16px;
+        }
+      }
+
+      /* Fix icon display issues */
+      .tfs-nav-links a i,
+      .tfs-btn-nav i,
+      .tfs-btn-mobile i,
+      .tfs-close-btn i,
+      .tfs-menu-toggle i {
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .tfs-nav-links a i.fas,
+      .tfs-btn-nav i.fas,
+      .tfs-btn-mobile i.fas,
+      .tfs-close-btn i.fas,
+      .tfs-menu-toggle i.fas {
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+      }
+
+      .tfs-nav-links a i.fa-solid,
+      .tfs-btn-nav i.fa-solid,
+      .tfs-btn-mobile i.fa-solid {
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+      }
+
+      /* Ensure icons show in all browsers */
+      .tfs-nav-links a i::before,
+      .tfs-btn-nav i::before,
+      .tfs-btn-mobile i::before,
+      .tfs-close-btn i::before,
+      .tfs-menu-toggle i::before {
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============================================
+         ROOT WRAPPER – all components inside .tfs-root
+         ============================================ -->
+    <div class="tfs-root">
+      <!-- TRANSPARENT HEADER -->
+      <header class="tfs-navbar" id="tfsNavbar">
+        <!-- LOGO -->
+        <div class="tfs-logo">
+          <img src="Photos/tranaparent.png" alt="Finance With Ajay" />
+        </div>
+
+        <!-- NAV LINKS (desktop + slide) -->
+        <nav class="tfs-nav-links" id="tfsMenu">
+          <button
+            class="tfs-close-btn"
+            onclick="tfsToggleMenu()"
+            aria-label="Close menu"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+
+          <a href="index.html"> <i class="fas fa-home"></i> Home </a>
+          <a href="about.html"> <i class="fas fa-user"></i> About </a>
+          <a href="services.html"> <i class="fas fa-cogs"></i> Services </a>
+          <a href="calculator.html">
+            <i class="fas fa-calculator"></i> Investment Calculator
+          </a>
+          <a href="contact.html"> <i class="fas fa-envelope"></i> Contact </a>
+
+          <!-- mobile CTA (visible only inside slide) -->
+          <a href="contact.html" class="tfs-btn-mobile" id="tfsMobileCta">
+            <i class="fas fa-handshake"></i> Get in Touch
+          </a>
+        </nav>
+
+        <!-- DESKTOP CTA -->
+        <a href="contact.html" class="tfs-btn-nav" id="tfsNavCta">
+          <i class="fas fa-handshake"></i> Get in Touch
+        </a>
+
+        <!-- HAMBURGER -->
+        <button
+          class="tfs-menu-toggle"
+          onclick="tfsToggleMenu()"
+          aria-label="Open menu"
+          id="tfsHamburgerBtn"
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+      </header>
+
+      <!-- OVERLAY -->
+      <div class="tfs-overlay" id="tfsOverlay" onclick="tfsToggleMenu()"></div>
+    </div>
+
+    <script>
+      // ===== TOGGLE MENU (globally scoped function) =====
+      function tfsToggleMenu() {
+        const menu = document.getElementById("tfsMenu");
+        const overlay = document.getElementById("tfsOverlay");
+        const hamburger = document.getElementById("tfsHamburgerBtn");
+        menu.classList.toggle("tfs-active");
+        overlay.classList.toggle("tfs-active");
+        const isOpen = menu.classList.contains("tfs-active");
+        hamburger.setAttribute("aria-expanded", isOpen);
+      }
+
+      // close on Escape
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          const menu = document.getElementById("tfsMenu");
+          const overlay = document.getElementById("tfsOverlay");
+          if (menu.classList.contains("tfs-active")) {
+            menu.classList.remove("tfs-active");
+            overlay.classList.remove("tfs-active");
+            document
+              .getElementById("tfsHamburgerBtn")
+              .setAttribute("aria-expanded", "false");
+          }
+        }
+      });
+
+      // close on resize to desktop
+      window.addEventListener("resize", function () {
+        if (window.innerWidth > 900) {
+          const menu = document.getElementById("tfsMenu");
+          const overlay = document.getElementById("tfsOverlay");
+          if (menu.classList.contains("tfs-active")) {
+            menu.classList.remove("tfs-active");
+            overlay.classList.remove("tfs-active");
+            document
+              .getElementById("tfsHamburgerBtn")
+              .setAttribute("aria-expanded", "false");
+          }
+        }
+      });
+
+      // ===== SCROLL EFFECT – add .tfs-scrolled =====
+      const navbar = document.getElementById("tfsNavbar");
+
+      window.addEventListener("scroll", function () {
+        if (window.scrollY > 50) {
+          navbar.classList.add("tfs-scrolled");
+        } else {
+          navbar.classList.remove("tfs-scrolled");
+        }
+      });
+
+      // ensure CTA links are set (already in HTML, but keep consistency)
+      // (no additional action needed)
+    </script>
+  </body>
+</html>
+
+<!-- ----page header--- -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us · full width header</title>
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ----- reset & base ----- */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family:
+          "Poppins",
+          "Segoe UI",
+          system-ui,
+          -apple-system,
+          sans-serif;
+      }
+
+      /* ----- FULL WIDTH PAGE HEADER (no card, no max-width) ----- */
+      .page-header {
+        width: 100%;
+        min-height: 380px;
+        height: auto;
+        /* premium background image – high‑res, subtle texture */
+        background-image: url("https://images.unsplash.com/photo-1556745753-b2904692b3cd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        background-size: cover;
+        background-position: center 30%;
+        background-repeat: no-repeat;
+        position: relative;
+        isolation: isolate;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6.5rem 2rem 3rem;
+        overflow: hidden;
+      }
+
+      /* rich, warm overlay for depth and readability */
+      .page-header::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          145deg,
+          rgba(10, 25, 40, 0.65) 0%,
+          rgba(0, 10, 25, 0.8) 100%
+        );
+        z-index: 0;
+        backdrop-filter: blur(2px);
+      }
+
+      /* content wrapper – sits above overlay */
+      .header-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        max-width: 820px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0.25rem 0;
+      }
+
+      /* tagline / badge – refined */
+      .tagline-badge {
+        display: inline-block;
+        background: rgba(255, 215, 100, 0.12);
+        backdrop-filter: blur(4px);
+        border: 1px solid rgba(255, 215, 100, 0.2);
+        padding: 0.4rem 1.6rem;
+        border-radius: 60px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 1.8px;
+        text-transform: uppercase;
+        color: #ffecbe;
+        margin-bottom: 1.2rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        transition: all 0.2s ease;
+      }
+      .tagline-badge:hover {
+        background: rgba(255, 215, 100, 0.2);
+        border-color: rgba(255, 215, 100, 0.4);
+        transform: scale(1.02);
+      }
+
+      /* main heading – "About Us" with animation */
+      .main-headline {
+        font-size: clamp(2.6rem, 9vw, 52px);
+        font-weight: 600;
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        color: white;
+        text-shadow: 0 6px 28px rgba(0, 0, 0, 0.35);
+        margin-bottom: 0.35rem;
+        animation: heroTitleBackToFront 1.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+
+      /* "Us" with fresh green gradient */
+      .main-headline span {
+        background: linear-gradient(135deg, #7cff00, #58d916);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 0 2px 16px rgba(124, 255, 0, 0.25);
+      }
+
+      /* keyframes: dramatic zoom + blur → crisp */
+      @keyframes heroTitleBackToFront {
+        0% {
+          opacity: 0;
+          transform: perspective(900px) translateZ(-700px) scale(0.35);
+          filter: blur(24px);
+        }
+        30% {
+          opacity: 0.7;
+          transform: perspective(900px) translateZ(-200px) scale(0.75);
+          filter: blur(8px);
+        }
+        65% {
+          opacity: 0.95;
+          transform: perspective(900px) translateZ(30px) scale(1.05);
+          filter: blur(1px);
+        }
+        100% {
+          opacity: 1;
+          transform: perspective(900px) translateZ(0) scale(1);
+          filter: blur(0);
+        }
+      }
+
+      /* sub-text – proud to be part of India’s growth story */
+      .sub-text {
+        font-size: 1.1rem;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.95);
+        text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
+        letter-spacing: 0.4px;
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 0.4rem 1.6rem;
+        background: rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(4px);
+        border-radius: 60px;
+        display: inline-block;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .sub-text i {
+        font-style: normal;
+        display: inline-block;
+      }
+
+      /* decorative divider – elegant accent */
+      .divider-line {
+        width: 70px;
+        height: 3px;
+        background: linear-gradient(90deg, #4af2f8, #1a56dd, #1a56dd, #4accf8);
+        margin: 0.6rem auto 0.9rem auto;
+        border-radius: 6px;
+        opacity: 0.8;
+        box-shadow: 0 0 12px rgba(251, 210, 106, 0.15);
+      }
+
+      /* ----- responsive fine-tune (full width, no card) ----- */
+      @media (max-width: 640px) {
+        .page-header {
+          min-height: 220px;
+          padding: 2rem 1rem;
+        }
+        .tagline-badge {
+          font-size: 0.6rem;
+          padding: 0.25rem 1rem;
+          margin-bottom: 0.6rem;
+          letter-spacing: 1.2px;
+        }
+        .main-headline {
+          font-size: clamp(1.9rem, 10vw, 2.8rem);
+        }
+        .sub-text {
+          font-size: clamp(0.8rem, 2.8vw, 1.1rem);
+          padding: 0.2rem 1.2rem;
+          background: rgba(0, 0, 0, 0.2);
+          border-radius: 40px;
+        }
+        .divider-line {
+          width: 44px;
+          height: 2px;
+          margin: 0.3rem auto 0.5rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .page-header {
+          min-height: 180px;
+          padding: 1.2rem 0.8rem;
+        }
+        .sub-text {
+          background: rgba(0, 0, 0, 0.25);
+          backdrop-filter: blur(3px);
+          padding: 0.2rem 1rem;
+          border-radius: 30px;
+        }
+        .tagline-badge {
+          font-size: 0.55rem;
+          padding: 0.2rem 0.8rem;
+        }
+      }
+
+      /* extra small height */
+      @media (max-height: 500px) {
+        .page-header {
+          min-height: 200px;
+          padding: 1rem 1.5rem;
+        }
+        .main-headline {
+          font-size: clamp(1.5rem, 6vw, 2.2rem);
+        }
+        .sub-text {
+          font-size: clamp(0.7rem, 2vw, 0.95rem);
+        }
+        .tagline-badge {
+          display: none;
+        }
+        .divider-line {
+          margin: 0.1rem auto 0.3rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ===== FULL WIDTH PAGE HEADER (no card, full bleed) ===== -->
+    <header class="page-header" role="banner" aria-label="Our Services header">
+      <div class="header-content">
+        <!-- main headline – Our Services with animated entrance -->
+        <h1 class="main-headline">Our <span>Services</span></h1>
+
+        <!-- subtle divider -->
+        <div class="divider-line" aria-hidden="true"></div>
+
+        <!-- tagline – kept the India growth story -->
+        <p class="sub-text">
+          <i>All we provide is here</i>
+        </p>
+      </div>
+    </header>
+  </body>
+</html>
+
+<!-- ----- solustion----- -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Services · Finance</title>
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ----- reset & base (scoped to .solutions-block) ----- */
+      .solutions-block * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .solutions-block {
+        background: #ffffff;
+        color: #1c2d4d;
+        padding: 20px 0 60px;
+        display: block;
+        width: 100%;
+      }
+
+      /* ----- main container (scoped) ----- */
+      .solutions-block .solutions {
+        width: 92%;
+        max-width: 1380px;
+        margin: 0 auto;
+        padding: 20px 14rem;
+      }
+
+      .solutions-block .main-title {
+        text-align: center;
+        font-size: 42px;
+        font-weight: 700;
+        color: #103d83;
+        margin-bottom: 30px;
+        letter-spacing: -0.3px;
+        position: relative;
+        display: inline-block;
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+      }
+      .solutions-block .main-title::after {
+        content: "";
+        display: block;
+        width: 90px;
+        height: 4px;
+        background: linear-gradient(90deg, #1d74ff, #6ea5ff);
+        border-radius: 30px;
+        margin: 12px auto 0;
+      }
+
+      /* ----- category (scoped) ----- */
+      .solutions-block .category {
+        margin-bottom: 52px;
+      }
+
+      .solutions-block .category-title {
+        text-align: center;
+        font-size: 28px;
+        font-weight: 600;
+        color: #0d3d8f;
+        margin-bottom: 28px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .solutions-block .category-title .cat-badge {
+        background: #eaf2ff;
+        padding: 4px 18px;
+        border-radius: 40px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #1d74ff;
+        letter-spacing: 0.3px;
+      }
+
+      /* ----- card grid (responsive) ----- */
+      .solutions-block .cards {
+        display: grid;
+        gap: 20px;
+      }
+
+      .solutions-block .wealth {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .solutions-block .insurance {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .solutions-block .advisory {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .solutions-block .special {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      @media (max-width: 992px) {
+        .solutions-block .wealth,
+        .solutions-block .insurance,
+        .solutions-block .advisory,
+        .solutions-block .special {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .solutions-block .wealth,
+        .solutions-block .insurance,
+        .solutions-block .advisory,
+        .solutions-block .special {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 500px) {
+        .solutions-block .wealth,
+        .solutions-block .insurance,
+        .solutions-block .advisory,
+        .solutions-block .special {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ----- card style (white+blue, clean) with PNG icons ----- */
+      .solutions-block .card {
+        background: #ffffff;
+        border: 1px solid #515151;
+        border-radius: 20px;
+        padding: 24px 12px 20px;
+        text-align: center;
+        transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+        cursor: default;
+        min-height: 190px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 12px rgba(0, 60, 180, 0.02);
+        position: relative;
+        will-change: transform, box-shadow, border-color;
+        background-color: #ffffff;
+      }
+
+      .solutions-block .card:hover {
+        transform: translateY(-8px) scale(1.01);
+        border-color: #2a78ff;
+        box-shadow:
+          0 20px 32px -8px rgba(26, 90, 255, 0.18),
+          0 8px 16px -6px rgba(0, 60, 200, 0.08);
+        background: #ffffff;
+      }
+
+      /* PNG icon wrapper */
+      .solutions-block .card .icon-wrap {
+        width: 68px;
+        height: 68px;
+        background: #f2f8ff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+        transition: 0.3s;
+        border: 1px solid rgba(29, 116, 255, 0.1);
+        box-shadow: 0 4px 8px rgba(0, 80, 200, 0.02);
+        padding: 10px;
+      }
+
+      .solutions-block .card:hover .icon-wrap {
+        background: #e5f0ff;
+        border-color: #1d74ff;
+        transform: scale(1.05) rotate(-2deg);
+        box-shadow: 0 8px 16px rgba(29, 116, 255, 0.12);
+      }
+
+      .solutions-block .card .icon-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+        transition: 0.3s;
+        filter: drop-shadow(0 2px 4px rgba(0, 60, 180, 0.05));
+      }
+
+      .solutions-block .card:hover .icon-wrap img {
+        transform: scale(1.06);
+      }
+
+      .solutions-block .card h3 {
+        font-size: 20px;
+        font-weight: 500;
+        color: #162b55;
+        line-height: 1.35;
+        letter-spacing: -0.2px;
+        margin-top: 2px;
+      }
+
+      .solutions-block .card:hover h3 {
+        color: #0a3170;
+      }
+
+      .solutions-block .card .card-sub {
+        font-size: 12px;
+        color: #6c87b0;
+        margin-top: 6px;
+        opacity: 0;
+        transition: 0.3s;
+        font-weight: 400;
+        letter-spacing: 0.3px;
+      }
+
+      .solutions-block .card:hover .card-sub {
+        opacity: 0.8;
+      }
+
+      /* ===== ANIMATION (entrance) ===== */
+      .solutions-block .card {
+        opacity: 0;
+        animation: fadeSlideUp 0.5s ease forwards;
+      }
+
+      .solutions-block .card:nth-child(1) {
+        animation-delay: 0.02s;
+      }
+      .solutions-block .card:nth-child(2) {
+        animation-delay: 0.06s;
+      }
+      .solutions-block .card:nth-child(3) {
+        animation-delay: 0.1s;
+      }
+      .solutions-block .card:nth-child(4) {
+        animation-delay: 0.14s;
+      }
+      .solutions-block .card:nth-child(5) {
+        animation-delay: 0.18s;
+      }
+      .solutions-block .card:nth-child(6) {
+        animation-delay: 0.22s;
+      }
+      .solutions-block .card:nth-child(7) {
+        animation-delay: 0.26s;
+      }
+      .solutions-block .card:nth-child(8) {
+        animation-delay: 0.3s;
+      }
+      .solutions-block .card:nth-child(9) {
+        animation-delay: 0.34s;
+      }
+      .solutions-block .card:nth-child(10) {
+        animation-delay: 0.38s;
+      }
+      .solutions-block .card:nth-child(11) {
+        animation-delay: 0.42s;
+      }
+      .solutions-block .card:nth-child(12) {
+        animation-delay: 0.46s;
+      }
+      .solutions-block .card:nth-child(13) {
+        animation-delay: 0.5s;
+      }
+      .solutions-block .card:nth-child(14) {
+        animation-delay: 0.54s;
+      }
+      .solutions-block .card:nth-child(15) {
+        animation-delay: 0.58s;
+      }
+
+      @keyframes fadeSlideUp {
+        0% {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ===== responsive fine-tune ===== */
+      @media (max-width: 992px) {
+        .solutions-block .cards {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 18px;
+        }
+        .solutions-block .main-title {
+          font-size: 36px;
+          white-space: normal;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .solutions-block .cards {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 16px;
+        }
+        .solutions-block .card {
+          min-height: 170px;
+          padding: 20px 10px;
+        }
+        .solutions-block .card .icon-wrap {
+          width: 58px;
+          height: 58px;
+          padding: 8px;
+        }
+        .solutions-block .card h3 {
+          font-size: 18px;
+        }
+        .solutions-block .category-title {
+          font-size: 24px;
+        }
+        .solutions-block .main-title {
+          font-size: 32px;
+        }
+      }
+
+      @media (max-width: 500px) {
+        .solutions-block .solutions {
+          padding: 20px 12px;
+        }
+        .solutions-block .cards {
+          grid-template-columns: 1fr 1fr;
+          max-width: 360px;
+          margin: 0 auto;
+        }
+        .solutions-block .card {
+          min-height: 150px;
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 6px 12px;
+          padding: 16px 12px;
+        }
+        .solutions-block .card .icon-wrap {
+          width: 52px;
+          height: 52px;
+          padding: 6px;
+          margin-bottom: 0;
+        }
+        .solutions-block .card h3 {
+          font-size: 18px;
+          margin-left: 2px;
+        }
+        .solutions-block .card .card-sub {
+          display: none;
+        }
+        .solutions-block .category-title {
+          font-size: 22px;
+        }
+        .solutions-block .main-title {
+          font-size: 28px;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .solutions-block .card {
+          min-height: 130px;
+          padding: 14px 8px;
+        }
+        .solutions-block .card .icon-wrap {
+          width: 44px;
+          height: 44px;
+          padding: 5px;
+        }
+        .solutions-block .card h3 {
+          font-size: 16px;
+        }
+      }
+
+      /* force white background on card and children */
+      .solutions-block .card,
+      .solutions-block .card * {
+        background: #ffffff;
+      }
+      .solutions-block .card .icon-wrap {
+        background: #f4f9ff;
+      }
+      .solutions-block .card .icon-wrap img {
+        background: transparent;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- everything wrapped in .solutions-block to avoid overrides -->
+    <section class="solutions-block">
+      <div class="solutions">
+        <h1 class="main-title">Our Services</h1>
+
+        <!-- ========== WEALTH & INVESTMENT ========== -->
+        <div class="category">
+          <h2 class="category-title">
+            Wealth & Investment
+            <span class="cat-badge">Grow</span>
+          </h2>
+          <div class="cards wealth">
+            <div class="card">
+              <div class="icon-wrap">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                  alt="wealth"
+                />
+              </div>
+              <h3>Wealth Management</h3>
+              <div class="card-sub">holistic growth</div>
+            </div>
+            <div class="card">
+              <div class="icon-wrap">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/3144/3144456.png"
+                  alt="mutual"
+                />
+              </div>
+              <h3>Mutual Fund Advisory</h3>
+              <div class="card-sub">expert guidance</div>
+            </div>
+            <div class="card">
+              <div class="icon-wrap">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/3475/3475216.png"
+                  alt="sip"
+                />
+              </div>
+              <h3>SIP Planning & Goal-Based Investing</h3>
+              <div class="card-sub">systematic & targeted</div>
+            </div>
+            <div class="card">
+              <div class="icon-wrap">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/3020/3020217.png"
+                  alt="financial"
+                />
+              </div>
+              <h3>Financial Planning</h3>
+              <div class="card-sub">roadmap to success</div>
+            </div>
+            <div class="card">
+              <div class="icon-wrap">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/3303/3303975.png"
+                  alt="retirement"
+                />
+              </div>
+              <h3>Retirement Planning</h3>
+              <div class="card-sub">secure future</div>
+            </div>
+            <div class="card">
+              <div class="icon-wrap">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/4221/4221314.png"
+                  alt="demat"
+                />
+              </div>
+              <h3>Demat & Equity Investments</h3>
+              <div class="card-sub">stocks & more</div>
+            </div>
+            <div class="card">
+              <div class="icon-wrap">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/2917/2917995.png"
+                  alt="ipo"
+                />
+              </div>
+              <h3>IPO Investments</h3>
+              <div class="card-sub">public offerings</div>
+            </div>
+            <div class="card">
+              <div class="icon-wrap">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/2392/2392066.png"
+                  alt="loan"
+                />
+              </div>
+              <h3>Loan Against Mutual Funds</h3>
+              <div class="card-sub">quick liquidity</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== INSURANCE SOLUTIONS ========== -->
+        <div class="category">
+          <h2 class="category-title">
+            Insurance Solutions
+            <span class="cat-badge">Protect</span>
+          </h2>
+          <div class="cards insurance">
+            <div class="card">
+              <div class="icon-wrap">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/2917/2917995.png"
+                  alt="term"
+                />
+              </div>
+              <h3>Term Insurance</h3>
+              <div class="card-sub">pure protection</div>
+            </div>
+            <div class="card">
+              <div class="icon-wrap">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/2966/2966327.png"
+                  alt="health"
+                />
+              </div>
+              <h3>Health Insurance</h3>
+              <div class="card-sub">wellness cover</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== STRATEGY & ALTERNATIVE ========== -->
+        <div class="category">
+          <h2 class="category-title">
+            Strategy & Alternative Investments
+            <span class="cat-badge">Innovate</span>
+          </h2>
+          <div class="cards special">
+            <div class="card">
+              <div class="icon-wrap">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/3081/3081925.png"
+                  alt="alternative"
+                />
+              </div>
+              <h3>Alternative Investment Strategies</h3>
+              <div class="card-sub">diversified opportunities</div>
+            </div>
+            <div class="card">
+              <div class="icon-wrap">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/3323/3323807.png"
+                  alt="tax"
+                />
+              </div>
+              <h3>Tax-Efficient Investment Planning</h3>
+              <div class="card-sub">smart tax strategies</div>
+            </div>
+            <div class="card">
+              <div class="icon-wrap">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/3095/3095587.png"
+                  alt="review"
+                />
+              </div>
+              <h3>Portfolio Review & Monitoring</h3>
+              <div class="card-sub">ongoing oversight</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== ADDITIONAL SUPPORT ========== -->
+        <div class="category">
+          <h2 class="category-title">
+            Advisory & Support
+            <span class="cat-badge">Guidance</span>
+          </h2>
+          <div class="cards advisory">
+            <div class="card">
+              <div class="icon-wrap">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/3020/3020217.png"
+                  alt="taxplan"
+                />
+              </div>
+              <h3>Tax Planning</h3>
+              <div class="card-sub">tax awareness</div>
+            </div>
+            <div class="card">
+              <div class="icon-wrap">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                  alt="financialplan"
+                />
+              </div>
+              <h3>Financial Planning</h3>
+              <div class="card-sub">comprehensive roadmap</div>
+            </div>
+            <div class="card">
+              <div class="icon-wrap">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/2933/2933246.png"
+                  alt="claims"
+                />
+              </div>
+              <h3>Claims Support</h3>
+              <div class="card-sub">hassle-free assistance</div>
+            </div>
+            <div class="card">
+              <div class="icon-wrap">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/3105/3105741.png"
+                  alt="review"
+                />
+              </div>
+              <h3>Portfolio Review</h3>
+              <div class="card-sub">performance check</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
